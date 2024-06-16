@@ -81,11 +81,6 @@ jobs:
       uses: actions/checkout@v4
     - name: Build
       uses: ./.github/actions/build
-    - id: file-changed
-      name: File changed
-      uses: tj-actions/changed-files@v44
-      with:
-        files: '**/*.py'
     - id: run-coverage
       name: Run coverage
       run: 'poetry run python-coverage '
@@ -103,18 +98,20 @@ jobs:
         ${{ needs.ruff.result =='success' }}
         ${{ needs.lock.result =='success' }}
         ${{ needs.mypy.result =='success' }}
+        ${{ needs.pytest.result =='success' }}
     if: ${{ always() }}
     name: 'Python test: OK'
     needs:
     - ruff
     - lock
     - mypy
+    - pytest
     runs-on: ubuntu-latest
     steps:
     - id: test-results
       name: Test results
       run: |-
-        echo ${{ RESULTS }}
+        echo $RESULTS
         for r in $RESULTS
         do
             if [ $r = "success" ] || [ $r = "skipped" ];
