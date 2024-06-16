@@ -349,7 +349,7 @@ class GitHubPythonTest(base.Workflow):
                 "id": "test-results",
                 "name": "Test results",
                 "run": "\n".join([
-                    "echo ${{ RESULTS }}",
+                    "echo $RESULTS",
                     "for r in $RESULTS",
                     "do",
                     '    if [ $r = "success" ] || [ $r = "skipped" ];',
