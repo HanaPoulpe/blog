@@ -101,10 +101,10 @@ jobs:
     container: python:3.12-slim-bookworm
     env:
       RESULTS: |-
-        ${{ needs.ruff.result =='success' }}
-        ${{ needs.lock.result =='success' }}
-        ${{ needs.mypy.result =='success' }}
-        ${{ needs.pytest.result =='success' }}
+        ${{ needs.ruff.result }}
+        ${{ needs.lock.result }}
+        ${{ needs.mypy.result }}
+        ${{ needs.pytest.result }}
     if: ${{ always() }}
     name: 'Python test: OK'
     needs:
