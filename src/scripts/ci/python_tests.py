@@ -400,7 +400,11 @@ class GitHubPythonTest(base.Workflow):
             "id": "file-changed",
             "uses": "tj-actions/changed-files@v44",
             "with": {
-                "files": "**/*.py",
+                "files_yaml": "\n".join([
+                    "python:",
+                    "  - '**/*.py'",
+                    "  - '!**/migrations/*.py'",
+                ]),
             },
         }
 

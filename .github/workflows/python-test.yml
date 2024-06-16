@@ -22,7 +22,10 @@ jobs:
       name: File changed
       uses: tj-actions/changed-files@v44
       with:
-        files: '**/*.py'
+        files_yaml: |
+          python:
+            - '**/*.py'
+            - '!**/migrations/*.py'
     - id: run-ruff
       if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
       name: Run ruff
@@ -60,18 +63,42 @@ jobs:
       name: Run mypy
       run: poetry run python-type-check ${{ steps.file-changed.outputs.all_changed_files
         }}
-  pytest:
+  blog_site_tests:
     container: python:3.12-slim-bookworm
-    name: 'Python test: pytest'
+    name: 'Python test: blog_site_tests'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v4
     - name: Build
       uses: ./.github/actions/build
-    - id: run-pytest
-      name: Run pytest
-      run: poetry run python-test-suite pytest
+    - id: run-blog-site-tests
+      name: Run blog_site_tests
+      run: poetry run python-test-suite blog_site_tests
+  all_apps_tests:
+    container: python:3.12-slim-bookworm
+    name: 'Python test: all_apps_tests'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build
+      uses: ./.github/actions/build
+    - id: run-all-apps-tests
+      name: Run all_apps_tests
+      run: poetry run python-test-suite all_apps_tests
+  unit_tests:
+    container: python:3.12-slim-bookworm
+    name: 'Python test: unit_tests'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build
+      uses: ./.github/actions/build
+    - id: run-unit-tests
+      name: Run unit_tests
+      run: poetry run python-test-suite unit_tests
   coverage:
     container: python:3.12-slim-bookworm
     name: 'Python test: coverage'
@@ -81,11 +108,9 @@ jobs:
       uses: actions/checkout@v4
     - name: Build
       uses: ./.github/actions/build
-    - id: install-system-deps
+    - id: install-system-dependencies
       name: Install system dependencies
-      run: |-
-        apt update
-        apt install -y gpg
+      run: apt-get update && apt-get install -y gpg
     - id: run-coverage
       name: Run coverage
       run: 'poetry run python-coverage '
@@ -93,9 +118,9 @@ jobs:
       name: Upload coverage
       uses: codecov/codecov-action@v4
       with:
-        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: 'true'
         files: coverage/report.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
         verbose: 'true'
   python-tests-passed:
     container: python:3.12-slim-bookworm
@@ -104,14 +129,18 @@ jobs:
         ${{ needs.ruff.result }}
         ${{ needs.lock.result }}
         ${{ needs.mypy.result }}
-        ${{ needs.pytest.result }}
+        ${{ needs.blog_site_tests.result }}
+        ${{ needs.all_apps_tests.result }}
+        ${{ needs.unit_tests.result }}
     if: ${{ always() }}
     name: 'Python test: OK'
     needs:
     - ruff
     - lock
     - mypy
-    - pytest
+    - blog_site_tests
+    - all_apps_tests
+    - unit_tests
     runs-on: ubuntu-latest
     steps:
     - id: test-results
