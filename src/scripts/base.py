@@ -6,7 +6,7 @@ import pathlib
 import subprocess
 import sys
 from collections.abc import Callable, Generator
-from typing import Any, ClassVar, Self, TextIO, cast
+from typing import Any, ClassVar, Self, TextIO
 
 PROJECT_ROOT: pathlib.Path = pathlib.Path(__file__).parent.parent
 
@@ -47,7 +47,7 @@ class _BaseCommand(abc.ABC):
 
     def __init_subclass__(cls, **kwargs: Any) -> None:
         super().__init_subclass__(**kwargs)
-        if not (name := cast(str, cls.name)):
+        if not (name := cls.name):
             return
 
         _COMMAND_REGISTER[name] = cls.as_command()
@@ -104,16 +104,16 @@ class ExecCommand(Command):
 
     cwd: ClassVar[str | pathlib.Path | None] = None
 
-    def get_args(self, *args: Any, **kwargs) -> list[str]:
+    def get_args(self, *args: Any, **kwargs: Any) -> list[str]:
         return []
 
-    def get_stdout(self, *args: Any, **kwargs) -> TextIO | None:
+    def get_stdout(self, *args: Any, **kwargs: Any) -> TextIO | None:
         return sys.stdout
 
-    def get_stderr(self, *args: Any, **kwargs) -> TextIO | None:
+    def get_stderr(self, *args: Any, **kwargs: Any) -> TextIO | None:
         return sys.stderr
 
-    def get_env(self, *args: Any, **kwargs) -> dict[str, str]:
+    def get_env(self, *args: Any, **kwargs: Any) -> dict[str, str]:
         return {}
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
