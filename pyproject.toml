@@ -138,6 +138,14 @@ python-check-imports = "scripts:import_linter"
 ci-python-tests = "scripts:github_python_test"
 ci-approval-bot = "scripts:github_approval_bot"
 
+# Django
+django-start = "scripts:django_runserver"
+django-shell = "scripts:django_shell"
+django-manage = "scripts:django_manage"
+django-makemigrations = "scripts:django_makemigrations"
+django-migrate = "scripts:django_migrate"
+django-createsuperuser = "scripts:django_createsuperuser"
+
 [tool.poetry.dependencies]
 python = "^3.12"
 termcolor = "^2.4.0"
