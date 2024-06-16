@@ -81,6 +81,11 @@ jobs:
       uses: actions/checkout@v4
     - name: Build
       uses: ./.github/actions/build
+    - id: install-system-deps
+      name: Install system dependencies
+      run: |-
+        apt update
+        apt install -y gpg
     - id: run-coverage
       name: Run coverage
       run: 'poetry run python-coverage '
@@ -88,6 +93,7 @@ jobs:
       name: Upload coverage
       uses: codecov/codecov-action@v4
       with:
+        token: ${{ secrets.CODECOV_TOKEN }}
         fail_ci_if_error: 'true'
         files: coverage/report.xml
         verbose: 'true'
