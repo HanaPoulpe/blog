@@ -1,6 +1,6 @@
 [run]
 branch = True
-source = python_template
+source = blog
 
 
 [report]
