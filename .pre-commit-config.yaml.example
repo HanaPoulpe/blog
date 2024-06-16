@@ -35,10 +35,17 @@ repos:
       hooks:
         - id: poetry-check
         - id: poetry-lock
-        - id: poetry-install
 
     - repo: local
       hooks:
+        - id: Poetry install
+          name: Poetry Install
+          entry: poetry install
+          language: python
+          language_version: "3.12"
+          pass_filenames: false
+          verbose: true
+
         # Python
         - id: ruff
           name: Ruff
@@ -58,14 +65,14 @@ repos:
         #  require_serial: true
         #  verbose: true
 
-        #- id: python-tests
-        #  name: Python Tests
-        #  entry: poetry run python-all-tests
-        #  language: python
-        #  language_version: "3.12"
-        #  types: [python]
-        #  require_serial: true
-        #  verbose: true
+        - id: python-tests
+          name: Python Tests
+          entry: poetry run python-all-tests
+          language: python
+          language_version: "3.12"
+          types: [python]
+          require_serial: true
+          verbose: true
 
         - id: python-type-check
           name: Python Type Check
