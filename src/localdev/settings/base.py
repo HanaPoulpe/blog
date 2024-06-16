@@ -2,7 +2,6 @@ import uuid
 from typing import ClassVar
 
 from blog import settings
-from frozenlist import FrozenList
 
 
 class Base(settings.Base):
@@ -10,7 +9,7 @@ class Base(settings.Base):
     SECRET_KEY: ClassVar[str] = str(uuid.getnode())
 
     # SECURITY WARNING: define the correct hosts in production!
-    ALLOWED_HOSTS: FrozenList[str] = FrozenList(["*"])
+    ALLOWED_HOSTS: list[str] = ["*"]
 
     EMAIL_BACKEND: str = "django.core.mail.backends.console.EmailBackend"
 

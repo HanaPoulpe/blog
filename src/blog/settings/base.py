@@ -129,14 +129,14 @@ class Base(Configuration):
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-    STATICFILES_FINDERS: FrozenList[str] = FrozenList([
+    STATICFILES_FINDERS: list[str] = [
         "django.contrib.staticfiles.finders.FileSystemFinder",
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    ])
+    ]
 
-    STATICFILES_DIRS: ClassVar[FrozenList[pathlib.Path]] = FrozenList([
+    STATICFILES_DIRS: ClassVar[pathlib.Path] = [
         PROJECT_DIR.joinpath("static"),
-    ])
+    ]
 
     STATIC_ROOT: pathlib.Path = BASE_DIR.joinpath("static")
     STATIC_URL: str = "/static/"
