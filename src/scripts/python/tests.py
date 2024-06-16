@@ -30,7 +30,12 @@ class Pytest(base.CommandWithParser, base.Command):
     name: ClassVar[str] = "pytest"
     description: ClassVar[str] = "Runs pytest"
 
-    def handle(self, *args: Any, added_options: list[str] | None = None, **kwargs: Any):
+    def handle(
+            self,
+            *args: Any,
+            added_options: list[str] | None = None,
+            **kwargs: Any,
+    ) -> None:
         arguments = list(args) or [
             *(added_options or []),
             *self.get_default_options(),
@@ -198,7 +203,7 @@ class MyPy(base.CommandWithParser):
     name: ClassVar[str] = "mypy"
     description: ClassVar[str] = "Runs mypy type checker"
 
-    cwd = base.PROJECT_ROOT
+    cwd = base.PROJECT_ROOT.parent
     default_files: ClassVar[list[str | pathlib.Path]] = [base.PROJECT_ROOT]
 
     def get_default_files(self) -> list[str]:
