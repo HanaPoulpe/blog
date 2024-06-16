@@ -1,5 +1,6 @@
-from . import base
 from typing import ClassVar
+
+from . import base
 
 
 class AllAppsMixin(base.Base):

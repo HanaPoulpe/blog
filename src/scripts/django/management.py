@@ -1,10 +1,10 @@
 import argparse
+import pathlib
+from typing import Any, ClassVar
+
+import manage
 
 from scripts import base
-from typing import Any, ClassVar
-import manage
-import pathlib
-import os
 
 
 class _Manage(base.Command):
@@ -21,13 +21,13 @@ class _Manage(base.Command):
             "--settings",
             type=str,
             default=self.django_settings,
-            help="Django settings module"
+            help="Django settings module",
         )
         parser.add_argument(
             "--configuration",
             type=str,
             default=self.django_configuration,
-            help="Django configuration"
+            help="Django configuration",
         )
 
         return parser
