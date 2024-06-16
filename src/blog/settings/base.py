@@ -134,7 +134,7 @@ class Base(Configuration):
         "django.contrib.staticfiles.finders.AppDirectoriesFinder",
     ]
 
-    STATICFILES_DIRS: ClassVar[pathlib.Path] = [
+    STATICFILES_DIRS: ClassVar[list[pathlib.Path]] = [
         PROJECT_DIR.joinpath("static"),
     ]
 

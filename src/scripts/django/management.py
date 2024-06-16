@@ -83,12 +83,19 @@ class RunServer(_Manage):
 
     def get_django_args(
             self,
+            settings: str,
+            configuration: str,
             host: str,
             port: int,
             *args: Any,
             **kwargs: Any,
     ) -> list[str]:
-        django_args = super().get_django_args(*args, **kwargs)
+        django_args = super().get_django_args(
+            settings,
+            configuration,
+            *args,
+            **kwargs,
+        )
         django_args.append(f"{host}:{port}")
 
         return django_args
