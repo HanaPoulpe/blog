@@ -4,12 +4,12 @@ import pathlib
 import sys
 from typing import Any, ClassVar
 
+import coverage
 import pytest
 import termcolor
 from importlinter import cli as importlinter
 from mypy import main as mypy
 
-import coverage
 from scripts import base
 
 _TEST_REGISTRY: list["Pytest"] = []
