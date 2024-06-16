@@ -290,6 +290,11 @@ class GitHubPythonTest(base.Workflow):
                     self.get_checkout(),
                     self.get_build(),
                     {
+                        "name": "Install system dependencies",
+                        "id": "install-system-dependencies",
+                        "run": "apt-get update && apt-get install -y gpg",
+                    },
+                    {
                         "name": "Run coverage",
                         "id": "run-coverage",
                         "run": f"poetry run python-coverage {fail_under_param}",
@@ -299,6 +304,7 @@ class GitHubPythonTest(base.Workflow):
                         "id": "upload-coverage",
                         "uses": "codecov/codecov-action@v4",
                         "with": {
+                            "token": "${{ secrets.CODECOV_TOKEN }}",
                             "files": "coverage/report.xml",
                             "fail_ci_if_error": "true",
                             "verbose": "true",
@@ -341,7 +347,7 @@ class GitHubPythonTest(base.Workflow):
             "needs": all_required,
             "env": {
                 "RESULTS": "\n".join([
-                    f"${{{{ needs.{need}.result =='success' }}}}"
+                    f"${{{{ needs.{need}.result }}}}"
                     for need in all_required
                 ]),
             },
@@ -349,7 +355,7 @@ class GitHubPythonTest(base.Workflow):
                 "id": "test-results",
                 "name": "Test results",
                 "run": "\n".join([
-                    "echo ${{ RESULTS }}",
+                    "echo $RESULTS",
                     "for r in $RESULTS",
                     "do",
                     '    if [ $r = "success" ] || [ $r = "skipped" ];',
@@ -394,7 +400,11 @@ class GitHubPythonTest(base.Workflow):
             "id": "file-changed",
             "uses": "tj-actions/changed-files@v44",
             "with": {
-                "files": "**/*.py",
+                "files_yaml": "\n".join([
+                    "python:",
+                    "  - '**/*.py'",
+                    "  - '!**/migrations/*.py'",
+                ]),
             },
         }
 

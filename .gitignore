@@ -1,4 +1,5 @@
 .venv
+.env
 
 # ignore coverage reports
 .coverage

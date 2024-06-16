@@ -2,7 +2,7 @@ import argparse
 import pathlib
 from typing import ClassVar
 
-from ruff import __main__ as ruff  # type: ignore
+from ruff import __main__ as ruff
 
 from scripts import base
 

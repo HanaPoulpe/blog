@@ -2,6 +2,7 @@ import argparse
 import contextlib
 import pathlib
 import sys
+from collections.abc import Generator
 from typing import Any, ClassVar
 
 import pytest
@@ -20,7 +21,7 @@ def _shell_path_to_file_names(path: str) -> list[pathlib.Path]:
 
 
 def get_all_tests() -> list["Pytest"]:
-    return _TEST_REGISTRY
+    return _TEST_REGISTRY or [Pytest()]
 
 
 class Pytest(base.CommandWithParser, base.Command):
@@ -30,12 +31,19 @@ class Pytest(base.CommandWithParser, base.Command):
     name: ClassVar[str] = "pytest"
     description: ClassVar[str] = "Runs pytest"
 
-    def handle(self, *args: Any, added_options: list[str] | None = None, **kwargs: Any):
+    cwd: ClassVar[pathlib.Path] = base.PROJECT_ROOT
+
+    def handle(
+            self,
+            *args: Any,
+            added_options: list[str] | None = None,
+            **kwargs: Any,
+    ) -> None:
         arguments = list(args) or [
             *(added_options or []),
             *self.get_default_options(),
-                *self.get_default_files(),
-            ]
+            *self._expand_files(self.get_default_files()),
+        ]
 
         if pytest.cmdline.main(arguments):
             raise base.CommandError()
@@ -63,8 +71,22 @@ class Pytest(base.CommandWithParser, base.Command):
     def __init__(self) -> None:
         super().__init__()
 
-        if not getattr(self, "bypass", False):
+        if (
+            not getattr(self.__class__, "bypass", False)
+            and not self.__class__.__name__.startswith("_")
+            and self.__class__.__name__ != "Pytest"
+        ):
             _TEST_REGISTRY.append(self)
+
+    def _expand_files(
+            self,
+            files: list[str | pathlib.Path],
+    ) -> Generator[pathlib.Path, None, None]:
+        for file in files:
+            if isinstance(file, pathlib.Path):
+                file = str(file)
+
+            yield from self.cwd.glob(file)
 
 
 class NamedPytest(base.Command):
@@ -198,7 +220,7 @@ class MyPy(base.CommandWithParser):
     name: ClassVar[str] = "mypy"
     description: ClassVar[str] = "Runs mypy type checker"
 
-    cwd = base.PROJECT_ROOT
+    cwd = base.PROJECT_ROOT.parent
     default_files: ClassVar[list[str | pathlib.Path]] = [base.PROJECT_ROOT]
 
     def get_default_files(self) -> list[str]:
