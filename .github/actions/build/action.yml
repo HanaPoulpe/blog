@@ -13,6 +13,6 @@ runs:
       poetry install --with=dev
     shell: bash
   - name: Collect static files
-    run: poetry run collectstaticfiles
+    run: poetry run collectstatic
     shell: bash
   using: composite

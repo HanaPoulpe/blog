@@ -33,6 +33,11 @@ class PythonBuildAction(base.Action):
                     "poetry install --with=dev",
                 ]),
             },
+            {
+                "name": "Collect static files",
+                "shell": "bash",
+                "run": "poetry run collectstatic",
+            },
         ]
 
 

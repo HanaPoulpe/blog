@@ -1,4 +1,5 @@
 import argparse
+import os
 import pathlib
 from typing import Any, ClassVar, TypeGuard
 
@@ -46,12 +47,26 @@ class _Manage(base.Command):
         return [
             self.name,
             self.django_command,
-            f"--settings={settings}",
-            f"--configuration={configuration}",
+            f"--settings={settings or self.django_settings}",
+            f"--configuration={configuration or self.django_configuration}",
         ]
 
-    def handle(self, *args: Any, **kwargs: Any) -> None:
-        manage.main(self.get_django_args(*args, **kwargs))
+    def handle(
+            self,
+            settings: str,
+            configuration: str,
+            *args: Any,
+            **kwargs: Any,
+    ) -> None:
+        os.environ["DJANGO_SETTINGS_MODULE"] = settings or self.django_settings
+        os.environ["DJANGO_CONFIGURATION"] = configuration or self.django_configuration
+
+        manage.main(self.get_django_args(
+            settings,
+            configuration,
+            *args,
+            **kwargs,
+        ))
 
 
 class Manage(base.CommandWithParser):
