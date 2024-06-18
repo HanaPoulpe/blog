@@ -106,6 +106,11 @@ class RunServer(_Manage):
 
         return django_args
 
+    def handle(self, *args: Any, **kwargs: Any) -> None:
+        print("Collecting static files...")
+        CollectStaticFiles.as_command().handle(*args, **kwargs)
+        super().handle(*args, **kwargs)
+
 
 class MakeMigrations(_Manage):
     name: ClassVar[str] = "django_makemigrations"
@@ -132,3 +137,27 @@ class CreateSuperUser(_Manage):
     name: ClassVar[str] = "django_createsuperuser"
     description: ClassVar[str] = "Creates Django superuser"
     django_command: ClassVar[str] = "createsuperuser"
+
+
+class CollectStaticFiles(_Manage):
+    name: ClassVar[str] = "django_collectstatic"
+    description: ClassVar[str] = "Collects static files"
+    django_command: ClassVar[str] = "collectstatic"
+
+    def get_django_args(
+            self,
+            settings: str,
+            configuration: str,
+            *args: Any,
+            **kwargs: Any,
+    ) -> list[str]:
+        django_args = super().get_django_args(
+            settings,
+            configuration,
+            *args,
+            **kwargs,
+        )
+        django_args.append("-l")
+        django_args.append("--noinput")
+
+        return django_args
