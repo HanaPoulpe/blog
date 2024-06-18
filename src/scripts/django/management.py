@@ -1,10 +1,14 @@
 import argparse
 import pathlib
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TypeGuard
 
 import manage
 
 from scripts import base
+
+
+def is_str_iterable(value: Any) -> TypeGuard[list[str]]:
+    return all(isinstance(item, str) for item in value)
 
 
 class _Manage(base.Command):
@@ -55,7 +59,9 @@ class Manage(base.CommandWithParser):
     description: ClassVar[str] = "Django manage.py wrapper"
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
-        manage.main(*args)
+        assert is_str_iterable(args)
+
+        manage.main(["manage", *args])
 
 
 class RunServer(_Manage):
