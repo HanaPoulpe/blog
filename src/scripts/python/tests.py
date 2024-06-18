@@ -1,5 +1,6 @@
 import argparse
 import contextlib
+import os
 import pathlib
 import sys
 from collections.abc import Generator
@@ -31,7 +32,7 @@ class Pytest(base.CommandWithParser, base.Command):
     name: ClassVar[str] = "pytest"
     description: ClassVar[str] = "Runs pytest"
 
-    cwd: ClassVar[pathlib.Path] = base.PROJECT_ROOT
+    cwd: ClassVar[pathlib.Path] = base.PROJECT_ROOT.joinpath("tests")
 
     def handle(
             self,
@@ -39,6 +40,8 @@ class Pytest(base.CommandWithParser, base.Command):
             added_options: list[str] | None = None,
             **kwargs: Any,
     ) -> None:
+        os.environ.update(self.get_env(*args, **kwargs))
+
         arguments = list(args) or [
             *(added_options or []),
             *self.get_default_options(),
@@ -85,7 +88,6 @@ class Pytest(base.CommandWithParser, base.Command):
         for file in files:
             if isinstance(file, pathlib.Path):
                 file = str(file)
-
             yield from self.cwd.glob(file)
 
 
@@ -107,6 +109,7 @@ class NamedPytest(base.Command):
 
         for test in get_all_tests():
             if test.name in names:
+                print(f"Running: {test.name}")
                 try:
                     test.handle(*args, **kwargs)
                 except base.CommandError:
@@ -147,6 +150,7 @@ class AllPythonTests(Pytest):
         summary: list[str] = []
 
         for test in get_all_tests():
+            print(f"Running: {test.name}")
             try:
                 test.handle(added_options=added_options)
             except base.CommandError:

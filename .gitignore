@@ -28,3 +28,6 @@ var/
 
 # Pre-commit local config
 .pre-commit-config.yaml
+
+# Static files
+/src/static/

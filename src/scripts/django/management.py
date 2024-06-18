@@ -1,10 +1,15 @@
 import argparse
+import os
 import pathlib
-from typing import Any, ClassVar
+from typing import Any, ClassVar, TypeGuard
 
 import manage
 
 from scripts import base
+
+
+def is_str_iterable(value: Any) -> TypeGuard[list[str]]:
+    return all(isinstance(item, str) for item in value)
 
 
 class _Manage(base.Command):
@@ -42,12 +47,26 @@ class _Manage(base.Command):
         return [
             self.name,
             self.django_command,
-            f"--settings={settings}",
-            f"--configuration={configuration}",
+            f"--settings={settings or self.django_settings}",
+            f"--configuration={configuration or self.django_configuration}",
         ]
 
-    def handle(self, *args: Any, **kwargs: Any) -> None:
-        manage.main(self.get_django_args(*args, **kwargs))
+    def handle(
+            self,
+            settings: str,
+            configuration: str,
+            *args: Any,
+            **kwargs: Any,
+    ) -> None:
+        os.environ["DJANGO_SETTINGS_MODULE"] = settings or self.django_settings
+        os.environ["DJANGO_CONFIGURATION"] = configuration or self.django_configuration
+
+        manage.main(self.get_django_args(
+            settings,
+            configuration,
+            *args,
+            **kwargs,
+        ))
 
 
 class Manage(base.CommandWithParser):
@@ -55,7 +74,9 @@ class Manage(base.CommandWithParser):
     description: ClassVar[str] = "Django manage.py wrapper"
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
-        manage.main(*args)
+        assert is_str_iterable(args)
+
+        manage.main(["manage", *args])
 
 
 class RunServer(_Manage):
@@ -100,6 +121,11 @@ class RunServer(_Manage):
 
         return django_args
 
+    def handle(self, *args: Any, **kwargs: Any) -> None:
+        print("Collecting static files...")
+        CollectStaticFiles.as_command().handle(*args, **kwargs)
+        super().handle(*args, **kwargs)
+
 
 class MakeMigrations(_Manage):
     name: ClassVar[str] = "django_makemigrations"
@@ -126,3 +152,27 @@ class CreateSuperUser(_Manage):
     name: ClassVar[str] = "django_createsuperuser"
     description: ClassVar[str] = "Creates Django superuser"
     django_command: ClassVar[str] = "createsuperuser"
+
+
+class CollectStaticFiles(_Manage):
+    name: ClassVar[str] = "django_collectstatic"
+    description: ClassVar[str] = "Collects static files"
+    django_command: ClassVar[str] = "collectstatic"
+
+    def get_django_args(
+            self,
+            settings: str,
+            configuration: str,
+            *args: Any,
+            **kwargs: Any,
+    ) -> list[str]:
+        django_args = super().get_django_args(
+            settings,
+            configuration,
+            *args,
+            **kwargs,
+        )
+        django_args.append("-l")
+        django_args.append("--noinput")
+
+        return django_args
