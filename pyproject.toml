@@ -158,7 +158,7 @@ python-dotenv = "^1.0.1"
 environs = "^11.0.0"
 frozenlist = "^1.4.1"
 frozendict = "^2.4.4"
-faker = "^25.8.0"
+faker = "^25.9.1"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
