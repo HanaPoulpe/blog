@@ -31,6 +31,11 @@ jobs:
       name: Run ruff
       run: poetry run python-ruff ${{ steps.file-changed.outputs.all_changed_files
         }}
+    - id: run-format
+      if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
+      name: Run ruff format
+      run: poetry run python-format ${{ steps.file-changed.outputs.all_changed_files
+        }}
   lock:
     container: python:3.12-slim-bookworm
     if: ${{ github.event_name == 'pull_request' }}

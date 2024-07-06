@@ -79,10 +79,10 @@ class Workflow(base.Command, abc.ABC):
         return create
 
     def handle(
-            self,
-            *args: Any,
-            func: Callable[..., None] | None = None,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        func: Callable[..., None] | None = None,
+        **kwargs: Any,
     ) -> None:
         if not func:
             raise base.CommandError("No command provided. Use `add` or `delete` command.")
@@ -140,10 +140,10 @@ class Action(base.Command, abc.ABC):
         return create
 
     def handle(
-            self,
-            *args: Any,
-            func: Callable[..., None] | None = None,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        func: Callable[..., None] | None = None,
+        **kwargs: Any,
     ) -> None:
         if not func:
             raise base.CommandError("No command provided. Use `add` or `delete` command.")

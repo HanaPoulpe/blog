@@ -38,11 +38,11 @@ class _Manage(base.Command):
         return parser
 
     def get_django_args(
-            self,
-            settings: str,
-            configuration: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        settings: str,
+        configuration: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> list[str]:
         return [
             self.name,
@@ -52,21 +52,23 @@ class _Manage(base.Command):
         ]
 
     def handle(
-            self,
-            settings: str,
-            configuration: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        settings: str,
+        configuration: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> None:
         os.environ["DJANGO_SETTINGS_MODULE"] = settings or self.django_settings
         os.environ["DJANGO_CONFIGURATION"] = configuration or self.django_configuration
 
-        manage.main(self.get_django_args(
-            settings,
-            configuration,
-            *args,
-            **kwargs,
-        ))
+        manage.main(
+            self.get_django_args(
+                settings,
+                configuration,
+                *args,
+                **kwargs,
+            )
+        )
 
 
 class Manage(base.CommandWithParser):
@@ -103,13 +105,13 @@ class RunServer(_Manage):
         return parser
 
     def get_django_args(
-            self,
-            settings: str,
-            configuration: str,
-            host: str,
-            port: int,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        settings: str,
+        configuration: str,
+        host: str,
+        port: int,
+        *args: Any,
+        **kwargs: Any,
     ) -> list[str]:
         django_args = super().get_django_args(
             settings,
@@ -160,11 +162,11 @@ class CollectStaticFiles(_Manage):
     django_command: ClassVar[str] = "collectstatic"
 
     def get_django_args(
-            self,
-            settings: str,
-            configuration: str,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        settings: str,
+        configuration: str,
+        *args: Any,
+        **kwargs: Any,
     ) -> list[str]:
         django_args = super().get_django_args(
             settings,

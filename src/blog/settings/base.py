@@ -20,7 +20,6 @@ class Base(Configuration):
     # Quick-start development settings - unsuitable for production
     # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-
     # Application definition
 
     INSTALLED_APPS: ClassVar[list[str]] = [
@@ -60,59 +59,68 @@ class Base(Configuration):
 
     ROOT_URLCONF: str = "blog.urls"
 
-    TEMPLATES: FrozenList[dict] = FrozenList([
-        {
-            "BACKEND": "django.template.backends.django.DjangoTemplates",
-            "DIRS": [
-                os.path.join(PROJECT_DIR, "templates"),
-            ],
-            "APP_DIRS": True,
-            "OPTIONS": {
-                "context_processors": [
-                    "django.template.context_processors.debug",
-                    "django.template.context_processors.request",
-                    "django.contrib.auth.context_processors.auth",
-                    "django.contrib.messages.context_processors.messages",
+    TEMPLATES: FrozenList[dict] = FrozenList(
+        [
+            {
+                "BACKEND": "django.template.backends.django.DjangoTemplates",
+                "DIRS": [
+                    os.path.join(PROJECT_DIR, "templates"),
                 ],
+                "APP_DIRS": True,
+                "OPTIONS": {
+                    "context_processors": [
+                        "django.template.context_processors.debug",
+                        "django.template.context_processors.request",
+                        "django.contrib.auth.context_processors.auth",
+                        "django.contrib.messages.context_processors.messages",
+                    ],
+                },
             },
-        },
-    ])
+        ]
+    )
 
     WSGI_APPLICATION: str = "blog.wsgi.application"
-
 
     # Database
     # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
-    DATABASES: frozendict[str, Any] = frozendict({
-        "default": {
-            "ENGINE": "django.db.backends.sqlite3",
-            "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-        },
-    })
-
+    DATABASES: frozendict[str, Any] = frozendict(
+        {
+            "default": {
+                "ENGINE": "django.db.backends.sqlite3",
+                "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
+            },
+        }
+    )
 
     # Password validation
     # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
 
-    AUTH_PASSWORD_VALIDATORS: FrozenList[dict[str, Any]] = FrozenList([
-        {
-            "NAME": (
-                "django.contrib.auth.password_validation."
-                "UserAttributeSimilarityValidator"
-            ),
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-        },
-        {
-            "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-        },
-    ])
-
+    AUTH_PASSWORD_VALIDATORS: FrozenList[dict[str, Any]] = FrozenList(
+        [
+            {
+                "NAME": (
+                    "django.contrib.auth.password_validation."
+                    "UserAttributeSimilarityValidator"
+                ),
+            },
+            {
+                "NAME": (
+                    "django.contrib.auth.password_validation.MinimumLengthValidator"
+                ),
+            },
+            {
+                "NAME": (
+                    "django.contrib.auth.password_validation.CommonPasswordValidator"
+                ),
+            },
+            {
+                "NAME": (
+                    "django.contrib.auth.password_validation.NumericPasswordValidator"
+                ),
+            },
+        ]
+    )
 
     # Internationalization
     # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -124,7 +132,6 @@ class Base(Configuration):
     USE_I18N: bool = True
 
     USE_TZ: bool = True
-
 
     # Static files (CSS, JavaScript, Images)
     # https://docs.djangoproject.com/en/5.0/howto/static-files/
@@ -146,19 +153,22 @@ class Base(Configuration):
 
     # Default storage settings, with the staticfiles storage updated.
     # See https://docs.djangoproject.com/en/5.0/ref/settings/#std-setting-STORAGES
-    STORAGES: frozendict[str, dict[str, str]] = frozendict({
-        "default": {
-            "BACKEND": "django.core.files.storage.FileSystemStorage",
-        },
-        # ManifestStaticFilesStorage is recommended in production, to prevent
-        # outdated JavaScript / CSS assets being served from cache
-        # (e.g. after a Wagtail upgrade).
-        # See https://docs.djangoproject.com/en/5.0/ref/contrib/staticfiles/#manifeststaticfilesstorage
-        "staticfiles": {
-            "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
-        },
-    })
-
+    STORAGES: frozendict[str, dict[str, str]] = frozendict(
+        {
+            "default": {
+                "BACKEND": "django.core.files.storage.FileSystemStorage",
+            },
+            # ManifestStaticFilesStorage is recommended in production, to prevent
+            # outdated JavaScript / CSS assets being served from cache
+            # (e.g. after a Wagtail upgrade).
+            # See https://docs.djangoproject.com/en/5.0/ref/contrib/staticfiles/#manifeststaticfilesstorage
+            "staticfiles": {
+                "BACKEND": (
+                    "django.contrib.staticfiles.storage.ManifestStaticFilesStorage"
+                ),
+            },
+        }
+    )
 
     # Wagtail settings
 
@@ -166,11 +176,13 @@ class Base(Configuration):
 
     # Search
     # https://docs.wagtail.org/en/stable/topics/search/backends.html
-    WAGTAILSEARCH_BACKENDS: ClassVar[frozendict[str, dict[str, str]]] = frozendict({
-        "default": {
-            "BACKEND": "wagtail.search.backends.database",
-        },
-    })
+    WAGTAILSEARCH_BACKENDS: ClassVar[frozendict[str, dict[str, str]]] = frozendict(
+        {
+            "default": {
+                "BACKEND": "wagtail.search.backends.database",
+            },
+        }
+    )
 
     # Base URL to use when referring to full URLs within the Wagtail admin backend -
     # e.g. in notification emails. Don't include '/admin' or a trailing slash
@@ -181,15 +193,17 @@ class Base(Configuration):
     # but note that this may present a security risk
     # if untrusted users are allowed to upload files -
     # see https://docs.wagtail.org/en/stable/advanced_topics/deploying.html#user-uploaded-files
-    WAGTAILDOCS_EXTENSIONS: ClassVar[FrozenList[str]] = FrozenList([
-        "csv",
-        "docx",
-        "key",
-        "odt",
-        "pdf",
-        "pptx",
-        "rtf",
-        "txt",
-        "xlsx",
-        "zip",
-    ])
+    WAGTAILDOCS_EXTENSIONS: ClassVar[FrozenList[str]] = FrozenList(
+        [
+            "csv",
+            "docx",
+            "key",
+            "odt",
+            "pdf",
+            "pptx",
+            "rtf",
+            "txt",
+            "xlsx",
+            "zip",
+        ]
+    )

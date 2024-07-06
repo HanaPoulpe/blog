@@ -28,10 +28,12 @@ class PythonBuildAction(base.Action):
             {
                 "name": "Install dependencies",
                 "shell": "bash",
-                "run": "\n".join([
-                    "pip install -r requirements.txt",
-                    "poetry install --with=dev",
-                ]),
+                "run": "\n".join(
+                    [
+                        "pip install -r requirements.txt",
+                        "poetry install --with=dev",
+                    ]
+                ),
             },
         ]
 
@@ -75,9 +77,9 @@ class GitHubPythonTest(base.Workflow):
         return parser
 
     def get_jobs(
-            self,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
         jobs: collections.OrderedDict[str, Any] = collections.OrderedDict()
         jobs = self.get_linters(jobs, *args, **kwargs)
@@ -89,13 +91,12 @@ class GitHubPythonTest(base.Workflow):
         return jobs
 
     def get_linters(
-            self,
-            jobs: collections.OrderedDict[str, Any],
-            tests: list[str] | None = None,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        jobs: collections.OrderedDict[str, Any],
+        tests: list[str] | None = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
-
         if not tests:
             ruff = self.prompt_bool("Do you want to run ruff?", default=True)
         else:
@@ -116,6 +117,15 @@ class GitHubPythonTest(base.Workflow):
                         "if": "${{ steps.file-changed.outputs.any_changed == 'true' }}",
                         "run": (
                             "poetry run python-ruff "
+                            "${{ steps.file-changed.outputs.all_changed_files }}"
+                        ),
+                    },
+                    {
+                        "name": "Ruff Format",
+                        "id": "ruff-format",
+                        "if": "${{ steps.file-changed.outputs.any_changed == 'true' }}",
+                        "run": (
+                            "poetry run python-format "
                             "${{ steps.file-changed.outputs.all_changed_files }}"
                         ),
                     },
@@ -146,11 +156,11 @@ class GitHubPythonTest(base.Workflow):
         return jobs
 
     def get_static_tests(
-            self,
-            jobs: collections.OrderedDict[str, Any],
-            tests: list[str] | None = None,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        jobs: collections.OrderedDict[str, Any],
+        tests: list[str] | None = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
         if not tests:
             mypy = self.prompt_bool("Do you want to run mypy?", default=True)
@@ -205,11 +215,11 @@ class GitHubPythonTest(base.Workflow):
         return jobs
 
     def get_tests(
-            self,
-            jobs: collections.OrderedDict[str, Any],
-            tests: list[str] | None = None,
-            *args: Any,
-            **kwargs: Any,
+        self,
+        jobs: collections.OrderedDict[str, Any],
+        tests: list[str] | None = None,
+        *args: Any,
+        **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
         all_tests = python_tests.get_all_tests()
 
@@ -346,29 +356,32 @@ class GitHubPythonTest(base.Workflow):
             "if": "${{ always() }}",
             "needs": all_required,
             "env": {
-                "RESULTS": "\n".join([
-                    f"${{{{ needs.{need}.result }}}}"
-                    for need in all_required
-                ]),
+                "RESULTS": "\n".join(
+                    [f"${{{{ needs.{need}.result }}}}" for need in all_required]
+                ),
             },
-            "steps": [{
-                "id": "test-results",
-                "name": "Test results",
-                "run": "\n".join([
-                    "echo $RESULTS",
-                    "for r in $RESULTS",
-                    "do",
-                    '    if [ $r = "success" ] || [ $r = "skipped" ];',
-                    "    then",
-                    "        true",
-                    "    else",
-                    '        echo "Some tests failed"',
-                    "        exit 1",
-                    "    fi",
-                    "done",
-                    'echo "All tests passed"',
-                ]),
-            }],
+            "steps": [
+                {
+                    "id": "test-results",
+                    "name": "Test results",
+                    "run": "\n".join(
+                        [
+                            "echo $RESULTS",
+                            "for r in $RESULTS",
+                            "do",
+                            '    if [ $r = "success" ] || [ $r = "skipped" ];',
+                            "    then",
+                            "        true",
+                            "    else",
+                            '        echo "Some tests failed"',
+                            "        exit 1",
+                            "    fi",
+                            "done",
+                            'echo "All tests passed"',
+                        ]
+                    ),
+                }
+            ],
         }
 
         return jobs
@@ -400,11 +413,13 @@ class GitHubPythonTest(base.Workflow):
             "id": "file-changed",
             "uses": "tj-actions/changed-files@v44",
             "with": {
-                "files_yaml": "\n".join([
-                    "python:",
-                    "  - '**/*.py'",
-                    "  - '!**/migrations/*.py'",
-                ]),
+                "files_yaml": "\n".join(
+                    [
+                        "python:",
+                        "  - '**/*.py'",
+                        "  - '!**/migrations/*.py'",
+                    ]
+                ),
             },
         }
 

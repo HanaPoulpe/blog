@@ -79,7 +79,6 @@ select = [
     # isort
     "I",
     # Other rules
-    "COM812",
     "COM818",
     "RUF012",
     "RUF013",
@@ -127,6 +126,7 @@ forbidden_modules = [
 [tool.poetry.scripts]
 # Python tools
 python-ruff = "scripts:ruff"
+python-format = "scripts:ruff_format"
 python-tests = "scripts:pytest"
 python-all-tests = "scripts:all_tests"
 python-test-suite = "scripts:test_suite"

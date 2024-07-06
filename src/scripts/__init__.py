@@ -6,16 +6,17 @@ from . import base
 
 
 def _walk_files(
-        path: pathlib.Path, exclude_current: bool,
+    path: pathlib.Path,
+    exclude_current: bool,
 ) -> Generator[pathlib.Path, None, None]:
     for entry in path.iterdir():
         if entry.is_dir():
             yield from _walk_files(entry, False)
         elif (
-                not exclude_current
-                and entry.is_file()
-                and not entry.name.startswith("_")
-                and entry.suffix == ".py"
+            not exclude_current
+            and entry.is_file()
+            and not entry.name.startswith("_")
+            and entry.suffix == ".py"
         ):
             yield entry
 

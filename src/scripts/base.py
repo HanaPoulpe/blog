@@ -57,6 +57,7 @@ class Command(_BaseCommand, abc.ABC):
     """
     Base class for commands with specific parser (mostly likely any new commands)
     """
+
     def get_parser(self) -> argparse.ArgumentParser:
         return argparse.ArgumentParser(prog=self.name, description=self.description)
 
@@ -83,6 +84,7 @@ class CommandWithParser(_BaseCommand, abc.ABC):
     """
     Base class for commands with existing commandline parser (like isort, etc...)
     """
+
     def __call__(self, args: list[str] | None = None) -> None:
         args = args or sys.argv[1:]
 
@@ -100,6 +102,7 @@ class ExecCommand(Command):
 
     - cwd - overwrites current working directory if existing
     """
+
     command_name: ClassVar[str] = ""
 
     cwd: ClassVar[str | pathlib.Path | None] = None
