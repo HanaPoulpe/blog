@@ -321,12 +321,15 @@ class GitHubPythonTest(base.Workflow):
             elif coverage_fail_under:
                 fail_under_param = f"--fail-under={coverage_fail_under}"
 
+            environment = self.get_environment_variables()
+            environment["DEBUG"] = 1
+
             jobs["coverage"] = {
                 "name": "Python test: coverage",
                 "runs-on": "ubuntu-latest",
                 "container": "python:3.12-slim-bookworm",
                 "services": self.get_postgresql_service(),
-                "env": self.get_environment_variables(),
+                "env": environment,
                 "steps": [
                     self.get_checkout(),
                     self.get_build(),
