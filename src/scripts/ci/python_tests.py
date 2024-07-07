@@ -92,17 +92,19 @@ class GitHubPythonTest(base.Workflow):
 
     def get_postgresql_service(self) -> dict[str, Any]:
         return {
-            "image": "postgres:16",
-            "ports": "5432/tcp",
-            # "env": {"POSTGRES_PASSWORD": "postgres"},
-            "options": "\n".join(
-                [
-                    "--health-cmd pg_isready",
-                    "--health-interval 10s",
-                    "--health-timeout 5s",
-                    "--health-retries 5",
-                ]
-            ),
+            "postgres": {
+                "image": "postgres:16",
+                "ports": ["5432/tcp"],
+                "env": {"POSTGRES_PASSWORD": "postgres"},
+                "options": " ".join(
+                    [
+                        "--health-cmd pg_isready",
+                        "--health-interval 10s",
+                        "--health-timeout 5s",
+                        "--health-retries 5",
+                    ]
+                ),
+            }
         }
 
     def get_environment_variables(self) -> dict[str, Any]:
@@ -323,6 +325,8 @@ class GitHubPythonTest(base.Workflow):
                 "name": "Python test: coverage",
                 "runs-on": "ubuntu-latest",
                 "container": "python:3.12-slim-bookworm",
+                "services": self.get_postgresql_service(),
+                "env": self.get_environment_variables(),
                 "steps": [
                     self.get_checkout(),
                     self.get_build(),

@@ -88,13 +88,14 @@ jobs:
     name: 'Python test: blog_site_tests'
     runs-on: ubuntu-latest
     services:
-      image: postgres:16
-      options: |-
-        --health-cmd pg_isready
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
-      ports: 5432/tcp
+      postgres:
+        env:
+          POSTGRES_PASSWORD: postgres
+        image: postgres:16
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -114,13 +115,14 @@ jobs:
     name: 'Python test: all_apps_tests'
     runs-on: ubuntu-latest
     services:
-      image: postgres:16
-      options: |-
-        --health-cmd pg_isready
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
-      ports: 5432/tcp
+      postgres:
+        env:
+          POSTGRES_PASSWORD: postgres
+        image: postgres:16
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -140,13 +142,14 @@ jobs:
     name: 'Python test: unit_tests'
     runs-on: ubuntu-latest
     services:
-      image: postgres:16
-      options: |-
-        --health-cmd pg_isready
-        --health-interval 10s
-        --health-timeout 5s
-        --health-retries 5
-      ports: 5432/tcp
+      postgres:
+        env:
+          POSTGRES_PASSWORD: postgres
+        image: postgres:16
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -157,8 +160,23 @@ jobs:
       run: poetry run python-test-suite unit_tests
   coverage:
     container: python:3.12-slim-bookworm
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: '5432'
+      DATABASE_USER: postgres
     name: 'Python test: coverage'
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        env:
+          POSTGRES_PASSWORD: postgres
+        image: postgres:16
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s
+          --health-retries 5
+        ports:
+        - 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
