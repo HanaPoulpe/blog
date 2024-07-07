@@ -22,7 +22,7 @@ jobs:
       name: File changed
       uses: tj-actions/changed-files@v44
       with:
-        files_yaml: |
+        files_yaml: |-
           python:
             - '**/*.py'
             - '!**/migrations/*.py'
@@ -31,9 +31,9 @@ jobs:
       name: Run ruff
       run: poetry run python-ruff ${{ steps.file-changed.outputs.all_changed_files
         }}
-    - id: run-format
+    - id: ruff-format
       if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
-      name: Run ruff format
+      name: Ruff Format
       run: poetry run python-format ${{ steps.file-changed.outputs.all_changed_files
         }}
   lock:
@@ -51,6 +51,12 @@ jobs:
       run: poetry lock --check
   mypy:
     container: python:3.12-slim-bookworm
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: '5432'
+      DATABASE_USER: postgres
     if: ${{ github.event_name == 'pull_request' }}
     name: 'Python linter: mypy'
     runs-on: ubuntu-latest
@@ -63,15 +69,32 @@ jobs:
       name: File changed
       uses: tj-actions/changed-files@v44
       with:
-        files: '**/*.py'
+        files_yaml: |-
+          python:
+            - '**/*.py'
+            - '!**/migrations/*.py'
     - id: run-mypy
       name: Run mypy
       run: poetry run python-type-check ${{ steps.file-changed.outputs.all_changed_files
         }}
   blog_site_tests:
     container: python:3.12-slim-bookworm
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: '5432'
+      DATABASE_USER: postgres
     name: 'Python test: blog_site_tests'
     runs-on: ubuntu-latest
+    services:
+      image: postgres:16
+      options: |-
+        --health-cmd pg_isready
+        --health-interval 10s
+        --health-timeout 5s
+        --health-retries 5
+      ports: 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -82,8 +105,22 @@ jobs:
       run: poetry run python-test-suite blog_site_tests
   all_apps_tests:
     container: python:3.12-slim-bookworm
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: '5432'
+      DATABASE_USER: postgres
     name: 'Python test: all_apps_tests'
     runs-on: ubuntu-latest
+    services:
+      image: postgres:16
+      options: |-
+        --health-cmd pg_isready
+        --health-interval 10s
+        --health-timeout 5s
+        --health-retries 5
+      ports: 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
@@ -94,8 +131,22 @@ jobs:
       run: poetry run python-test-suite all_apps_tests
   unit_tests:
     container: python:3.12-slim-bookworm
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: postgres
+      DATABASE_PASSWORD: postgres
+      DATABASE_PORT: '5432'
+      DATABASE_USER: postgres
     name: 'Python test: unit_tests'
     runs-on: ubuntu-latest
+    services:
+      image: postgres:16
+      options: |-
+        --health-cmd pg_isready
+        --health-interval 10s
+        --health-timeout 5s
+        --health-retries 5
+      ports: 5432/tcp
     steps:
     - name: Checkout
       uses: actions/checkout@v4
