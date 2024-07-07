@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import os
+import pathlib
 import sys
 
 import dotenv
 
-dotenv.load_dotenv()
+dotenv.load_dotenv(pathlib.Path(__file__).parent.joinpath(".env"))
 
 
 def main(argv: list[str] | None = None) -> None:

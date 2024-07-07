@@ -44,11 +44,18 @@ class _Manage(base.Command):
         *args: Any,
         **kwargs: Any,
     ) -> list[str]:
+        settings = settings or os.environ.get(
+            "DJANGO_SETTINGS_MODULE", self.django_settings
+        )
+        configuration = configuration or os.environ.get(
+            "DJANGO_CONFIGURATION", self.django_configuration
+        )
+
         return [
             self.name,
             self.django_command,
-            f"--settings={settings or self.django_settings}",
-            f"--configuration={configuration or self.django_configuration}",
+            f"--settings={settings}",
+            f"--configuration={configuration}",
         ]
 
     def handle(

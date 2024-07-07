@@ -160,6 +160,7 @@ frozenlist = "^1.4.1"
 frozendict = "^2.4.4"
 faker = "^26.0.0"
 psycopg2 = "^2.9.9"
+django-health-check = "^3.18.3"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"
