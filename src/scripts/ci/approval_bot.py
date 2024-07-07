@@ -45,13 +45,13 @@ class ApprovalBot(base.Workflow):
         return parser
 
     def get_jobs(
-            self,
-            *args: Any,
-            owner: bool = False,
-            dependabot: bool = False,
-            commit_linter: bool = False,
-            clear_automerge: bool = False,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        owner: bool = False,
+        dependabot: bool = False,
+        commit_linter: bool = False,
+        clear_automerge: bool = False,
+        **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
         jobs: collections.OrderedDict[str, Any] = collections.OrderedDict()
 
@@ -59,14 +59,16 @@ class ApprovalBot(base.Workflow):
             jobs["clear-automerge"] = {
                 "name": "Clear automerge",
                 "runs-on": "ubuntu-latest",
-                "steps": [{
-                    "name": "Disable auto - merge",
-                    "run": 'gh pr merge - -disable - auto - -merge "$PR_URL" || true',
-                    "env": {
-                        "PR_URL": "${{github.event.pull_request.html_url}}",
-                        "GITHUB_TOKEN": "${{secrets.GITHUB_TOKEN}}",
-                    },
-                }],
+                "steps": [
+                    {
+                        "name": "Disable auto - merge",
+                        "run": 'gh pr merge - -disable - auto - -merge "$PR_URL" || true',
+                        "env": {
+                            "PR_URL": "${{github.event.pull_request.html_url}}",
+                            "GITHUB_TOKEN": "${{secrets.GITHUB_TOKEN}}",
+                        },
+                    }
+                ],
             }
 
         if owner:
@@ -77,14 +79,16 @@ class ApprovalBot(base.Workflow):
                     "${{github.event.pull_request.user.login == "
                     "github.repository_owner}}"
                 ),
-                "steps": [{
-                    "name": "Auto approve owner",
-                    "run": 'gh pr review "$PR_URL" --approve',
-                    "env": {
-                        "PR_URL": "${{github.event.pull_request.html_url}}",
-                        "GITHUB_TOKEN": "${{secrets.GITHUB_TOKEN}}",
-                    },
-                }],
+                "steps": [
+                    {
+                        "name": "Auto approve owner",
+                        "run": 'gh pr review "$PR_URL" --approve',
+                        "env": {
+                            "PR_URL": "${{github.event.pull_request.html_url}}",
+                            "GITHUB_TOKEN": "${{secrets.GITHUB_TOKEN}}",
+                        },
+                    }
+                ],
             }
 
         if dependabot:
@@ -140,16 +144,17 @@ class ApprovalBot(base.Workflow):
                             "&& steps.dependabot-metadata.outputs."
                             "dependency-type == 'direct:production'}}"
                         ),
-                        "run": "\n".join([
-                            "gh pr comment $PR_URL --body "
-                            "\"I'm **not approving** this PR because "
-                            "**it includes a major update of a "
-                            'dependency used in production**"',
-                            "gh pr edit $PR_URL "
-                            '--add-label "requires-manual-qa"',
-                            "gh pr edit $PR_URL "
-                            "--add-assignee ${{ github.repository_owner }}",
-                        ]),
+                        "run": "\n".join(
+                            [
+                                "gh pr comment $PR_URL --body "
+                                "\"I'm **not approving** this PR because "
+                                "**it includes a major update of a "
+                                'dependency used in production**"',
+                                "gh pr edit $PR_URL " '--add-label "requires-manual-qa"',
+                                "gh pr edit $PR_URL "
+                                "--add-assignee ${{ github.repository_owner }}",
+                            ]
+                        ),
                         "env": {
                             "PR_URL": "${{github.event.pull_request.html_url}}",
                             "GITHUB_TOKEN": "${{secrets.GITHUB_TOKEN}}",

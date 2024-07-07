@@ -9,7 +9,7 @@ class Base(settings.Base):
     SECRET_KEY: ClassVar[str] = str(uuid.getnode())
 
     # SECURITY WARNING: define the correct hosts in production!
-    ALLOWED_HOSTS: ClassVar[list[str] ]= ["*"]
+    ALLOWED_HOSTS: ClassVar[list[str]] = ["*"]
 
     EMAIL_BACKEND: str = "django.core.mail.backends.console.EmailBackend"
 

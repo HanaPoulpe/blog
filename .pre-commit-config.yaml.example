@@ -55,7 +55,14 @@ repos:
           types: [python]
           require_serial: true
           verbose: true
-
+        - id: format
+          name: Format
+          entry: poetry run python-format
+          language: python
+          language_version: "3.12"
+          types: [python]
+          require_serial: true
+          verbose: true
         #- id: import-linter
         #  name: Import Linter
         #  entry: poetry run python-import-linter

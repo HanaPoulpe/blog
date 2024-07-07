@@ -79,7 +79,6 @@ select = [
     # isort
     "I",
     # Other rules
-    "COM812",
     "COM818",
     "RUF012",
     "RUF013",
@@ -127,6 +126,7 @@ forbidden_modules = [
 [tool.poetry.scripts]
 # Python tools
 python-ruff = "scripts:ruff"
+python-format = "scripts:ruff_format"
 python-tests = "scripts:pytest"
 python-all-tests = "scripts:all_tests"
 python-test-suite = "scripts:test_suite"
@@ -159,6 +159,8 @@ environs = "^11.0.0"
 frozenlist = "^1.4.1"
 frozendict = "^2.4.4"
 faker = "^26.0.0"
+django-health-check = "^3.18.3"
+psycopg2-binary = "^2.9.9"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.2.2"

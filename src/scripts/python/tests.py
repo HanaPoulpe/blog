@@ -29,16 +29,17 @@ class Pytest(base.CommandWithParser, base.Command):
     """
     Base command for running pytest
     """
+
     name: ClassVar[str] = "pytest"
     description: ClassVar[str] = "Runs pytest"
 
     cwd: ClassVar[pathlib.Path] = base.PROJECT_ROOT.joinpath("tests")
 
     def handle(
-            self,
-            *args: Any,
-            added_options: list[str] | None = None,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        added_options: list[str] | None = None,
+        **kwargs: Any,
     ) -> None:
         os.environ.update(self.get_env(*args, **kwargs))
 
@@ -82,8 +83,8 @@ class Pytest(base.CommandWithParser, base.Command):
             _TEST_REGISTRY.append(self)
 
     def _expand_files(
-            self,
-            files: list[str | pathlib.Path],
+        self,
+        files: list[str | pathlib.Path],
     ) -> Generator[pathlib.Path, None, None]:
         for file in files:
             if isinstance(file, pathlib.Path):
@@ -140,10 +141,10 @@ class AllPythonTests(Pytest):
     description: ClassVar[str] = "Runs all tests"
 
     def handle(
-            self,
-            *args: Any,
-            added_options: list[str] | None = None,
-            **kwargs: Any,
+        self,
+        *args: Any,
+        added_options: list[str] | None = None,
+        **kwargs: Any,
     ) -> None:
         self.get_parser().parse_args(args or sys.argv[1:])
         has_failed = False

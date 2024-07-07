@@ -24,10 +24,12 @@ class _DjangoTests(tests.Pytest):
         **kwargs: Any,
     ) -> None:
         if self.collect_static:
-            management.CollectStaticFiles.as_command()([
-                f"--settings={self.django_settings_module}",
-                f"--configuration={self.django_configuration}",
-            ])
+            management.CollectStaticFiles.as_command()(
+                [
+                    f"--settings={self.django_settings_module}",
+                    f"--configuration={self.django_configuration}",
+                ]
+            )
 
         super().handle(*args, **kwargs)
 
