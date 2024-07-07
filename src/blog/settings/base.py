@@ -44,6 +44,9 @@ class Base(Configuration):
         "django.contrib.sessions",
         "django.contrib.messages",
         "django.contrib.staticfiles",
+        "health_check",
+        "health_check.db",
+        "health_check.contrib.migrations",
     ]
 
     MIDDLEWARE: ClassVar[list[str]] = [
@@ -56,6 +59,16 @@ class Base(Configuration):
         "django.middleware.security.SecurityMiddleware",
         "wagtail.contrib.redirects.middleware.RedirectMiddleware",
     ]
+
+    HEALTH_CHECK: ClassVar[dict[str, Any]] = {
+        "SUBSETS": {
+            "readiness": [
+                "DatabaseBackend",
+                "MigrationCheck",
+            ],
+            "liveness": ["DatabaseBackend"],
+        },
+    }
 
     ROOT_URLCONF: str = "blog.urls"
 
@@ -87,9 +100,13 @@ class Base(Configuration):
     DATABASES: frozendict[str, Any] = frozendict(
         {
             "default": {
-                "ENGINE": "django.db.backends.sqlite3",
-                "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
-            },
+                "ENGINE": "django.db.backends.postgresql_psycopg2",
+                "NAME": env.str("DATABASE_NAME"),
+                "USER": env.str("DATABASE_USER"),
+                "PASSWORD": env.str("DATABASE_PASSWORD"),
+                "HOST": env.str("DATABASE_HOST"),
+                "PORT": env.int("DATABASE_PORT"),
+            }
         }
     )
 
