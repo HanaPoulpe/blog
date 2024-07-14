@@ -49,6 +49,7 @@ class Base(Configuration):
         "health_check",
         "health_check.db",
         "health_check.contrib.migrations",
+        "django_linear_migrations",
     ]
 
     MIDDLEWARE: ClassVar[list[str]] = [
