@@ -1,0 +1,18 @@
+{% load wagtailcore_tags navigation_tags %}
+
+{% block header %}
+    {% get_site_root as site_root %}
+    <header>
+        <a href="{% pageurl site_root %}">Home</a>
+    </header>
+
+    {% get_current_page_location as location %}
+    <div>
+        <a href="{% pageurl site_root %}"><i class="fa-solid fa-house"></i></a>
+        {% for parent in location %}
+            <a href="{% pageurl parent %}">{{ parent.title }}</a> /
+        {% endfor %}
+    </div>
+
+    {% include "includes/nav.html" %}
+{% endblock %}
