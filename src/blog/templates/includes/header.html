@@ -1,10 +1,17 @@
-{% load wagtailcore_tags navigation_tags %}
+{% load wagtailcore_tags navigation_tags wagtailsettings_tags wagtailimages_tags %}
+{% get_settings %}
 
 {% block header %}
     {% get_site_root as site_root %}
     <header>
-        <a href="{% pageurl site_root %}">Home</a>
-    </header>
+    <div class="siteBanner" style="background: {{ settings.website.BlogSettings.banner_color }}">
+        <a href="{% pageurl site_root %}">
+            <h1 style="color: {{ settings.website.BlogSettings.title_color }};">{{ site_root.get_site.site_name }}</h1>
+            {% if settings.website.BlogSettings.banner %}
+                {% srcset_image settings.website.BlogSettings.banner fill-{400x300,600x300,800x300,1080x300} sizes="(max-width: 500px) 400w, (max-width: 700px) 600w, (max-width: 900px) 800w, (min-width: 900) 1080w" height="300px" width="100%" %}
+            {% endif %}
+        </a>
+    </div>
 
     {% get_current_page_location as location %}
     <div>
@@ -15,4 +22,5 @@
     </div>
 
     {% include "includes/nav.html" %}
+    </header>
 {% endblock %}

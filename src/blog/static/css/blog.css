@@ -1,0 +1,22 @@
+.siteBanner {
+    height: 20em;
+    width: 100%;
+
+    a {
+        img {
+            margin: 0;
+            border: none;
+            object-fit: cover;
+        }
+
+        h1 {
+            margin: 2rem 8rem;
+            font-size: 12rem;
+            vertical-align: center;
+            position: absolute;
+            z-index: 1;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: #000000;
+        }
+    }
+}
