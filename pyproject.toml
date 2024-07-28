@@ -137,6 +137,7 @@ python-check-imports = "scripts:import_linter"
 # CI tools
 ci-python-tests = "scripts:github_python_test"
 ci-approval-bot = "scripts:github_approval_bot"
+ci-frontend = "scripts:github_frontend_test"
 
 # Django
 django-start = "scripts:django_runserver"

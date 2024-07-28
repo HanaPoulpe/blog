@@ -1,0 +1,61 @@
+name: Frontend tests
+run-name: frontend-tests
+'on':
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+jobs:
+  css-linter:
+    name: CSS linter
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - id: install-npm
+      name: Install NPM
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - id: install-dependencies
+      name: Install NPM dependencies
+      run: npm install
+    - id: file-changed
+      name: File changed
+      uses: tj-actions/changed-files@v44
+      with:
+        files_yaml: |-
+          python:
+            - '**/*.css'
+            - '**/*.scss'
+    - id: run-css-linter
+      if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
+      name: Run CSS linter
+      run: npm run stylelint ${{ steps.file-changed.outputs.all_changed_files }}
+  tests-passed:
+    container: python:3.12-slim-bookworm
+    env:
+      RESULTS: ${{ needs.css-linter.result }}
+    if: ${{ always() }}
+    name: 'Python test: OK'
+    needs:
+    - css-linter
+    runs-on: ubuntu-latest
+    steps:
+    - id: test-results
+      name: Test results
+      run: |-
+        echo $RESULTS
+        for r in $RESULTS
+        do
+            if [ $r = "success" ] || [ $r = "skipped" ];
+            then
+                true
+            else
+                echo "Some tests failed"
+                exit 1
+            fi
+        done
+        echo "All tests passed"
