@@ -1,0 +1,12 @@
+{% load wagtailcore_tags navigation_tags wagtailimages_tags %}
+
+{% block nav %}
+    <nav>
+        {% get_site_root as site_root %}
+        {% for menuitem in site_root.get_children.live.in_menu %}
+            <p>
+                <a href="{% pageurl menuitem %}">{{ menuitem.title }}</a>
+            </p>
+        {% endfor %}
+    </nav>
+{% endblock %}

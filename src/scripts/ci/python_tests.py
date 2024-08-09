@@ -2,8 +2,6 @@ import argparse
 import collections
 from typing import Any, ClassVar
 
-import termcolor
-
 from scripts.python import tests as python_tests
 
 from . import _base as base
@@ -427,13 +425,6 @@ class GitHubPythonTest(base.Workflow):
         build_action(["create"])
 
     @staticmethod
-    def get_checkout() -> dict[str, Any]:
-        return {
-            "name": "Checkout",
-            "uses": "actions/checkout@v4",
-        }
-
-    @staticmethod
     def get_build() -> dict[str, Any]:
         return {
             "name": "Build",
@@ -456,15 +447,3 @@ class GitHubPythonTest(base.Workflow):
                 ),
             },
         }
-
-    @staticmethod
-    def prompt_bool(message: str, default: bool = True) -> bool:
-        y = termcolor.colored("Y", "green", attrs=["bold"] if default else None)
-        n = termcolor.colored("N", "red", attrs=["bold"] if not default else None)
-
-        print(f"{message} [{y}/{n}]: ", end="")
-
-        while (choice := input().lower()) not in ["y", "yes", "n", "no", ""]:
-            print(f"{message} [{y}/{n}]: ", end="")
-
-        return default if choice == "" else choice in ["y", "yes"]

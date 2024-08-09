@@ -31,3 +31,4 @@ var/
 
 # Static files
 /src/static/
+/src/media/

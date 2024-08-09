@@ -26,21 +26,27 @@
         {# Global stylesheets #}
         <link rel="stylesheet" type="text/css" href="{% static 'css/blog.css' %}">
 
+
         {% block extra_css %}
         {# Override this in templates to add extra stylesheets #}
         {% endblock %}
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+    <div class="container">
         {% wagtailuserbar %}
+        {% include "includes/header.html" %}
 
-        {% block content %}{% endblock %}
+        <div class="content">{% block content %}{% endblock %}</div>
+        {% include "includes/footer.html" %}
 
         {# Global javascript #}
         <script type="text/javascript" src="{% static 'js/blog.js' %}"></script>
+        <script src="https://kit.fontawesome.com/412f49eabe.js" crossorigin="anonymous"></script>
 
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
+    </div>
     </body>
 </html>

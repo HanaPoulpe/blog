@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* Backgrounds */
+    --page-gb-color: #23162c;
+    --light-bg-color: #34264d;
+    --dark-bg-color: #1a1128;
+
+    /* Text */
+    --text-color: #a3fee4;
+    --light-text-color: #c2e8ee;
+    --dark-text-color: #2ca4aa;
+
+    /* Font */
+    --font-family: 'Poppins', sans-serif;
+
+    /* Decorations */
+    --dark-line-color: black;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--page-gb-color);
+    font-size: 1rem;
+}
+
+a {
+    color: var(--light-text-color);
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+        color: var(--dark-text-color);
+    }
+}
+
+.site-banner {
+    padding: 0;
+
+    a {
+        padding: 0;
+
+        img {
+            margin: 0;
+            border: none;
+            object-fit: cover;
+        }
+
+        h1 {
+            margin: 1rem 8rem;
+            font-size: 11rem;
+            vertical-align: center;
+            position: absolute;
+            z-index: 1;
+            -webkit-text-stroke-width: 2px;
+            -webkit-text-stroke-color: #000;
+        }
+    }
+}
+
+.breadcrumb {
+    padding: 0 0.5rem;
+    border-bottom: 1px solid var(--dark-line-color);
+}
+
+header {
+    background-color: var(--dark-bg-color);
+}
+
+nav {
+    padding: 0.1rem;
+    margin: 0.3rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    p {
+        background-color: var(--light-bg-color);
+        margin: 0.1rem;
+        padding: 0.1rem 0.5rem;
+    }
+}
+
+footer {
+    padding: 0.1rem;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: var(--dark-bg-color);
+
+    p {
+        margin: 0.5rem 0.1rem 0.1rem;
+        padding: 0.1rem 0.5rem;
+        background-color: var(--light-bg-color);
+    }
+}
+
+.container {
+    margin: 0 1rem;
+    background-color: var(--dark-bg-color);
+}
+
+.content {
+    margin: 0 0.5rem;
+    padding: 0.5rem;
+    background-color: var(--light-bg-color);
+}

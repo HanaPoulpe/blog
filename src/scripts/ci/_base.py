@@ -6,6 +6,7 @@ import pathlib
 from collections.abc import Callable
 from typing import Any, ClassVar
 
+import termcolor
 import yaml
 
 from scripts import base
@@ -105,6 +106,25 @@ class Workflow(base.Command, abc.ABC):
     def delete(self) -> None:
         if self.workflow_path.exists():
             os.remove(self.workflow_path)
+
+    @staticmethod
+    def get_checkout() -> dict[str, Any]:
+        return {
+            "name": "Checkout",
+            "uses": "actions/checkout@v4",
+        }
+
+    @staticmethod
+    def prompt_bool(message: str, default: bool = True) -> bool:
+        y = termcolor.colored("Y", "green", attrs=["bold"] if default else None)
+        n = termcolor.colored("N", "red", attrs=["bold"] if not default else None)
+
+        print(f"{message} [{y}/{n}]: ", end="")
+
+        while (choice := input().lower()) not in ["y", "yes", "n", "no", ""]:
+            print(f"{message} [{y}/{n}]: ", end="")
+
+        return default if choice == "" else choice in ["y", "yes"]
 
 
 class Action(base.Command, abc.ABC):
