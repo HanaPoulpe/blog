@@ -89,3 +89,12 @@ repos:
           types: [python]
           require_serial: true
           verbose: true
+
+        - id: csslinter
+          name: CSS Linter
+          entry: npm run stylelint
+          language: node
+          language_version: "20.9.0"
+          types: [css, scss]
+          require_serial: true
+          verbose: true

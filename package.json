@@ -1,0 +1,24 @@
+{
+  "author": "Hana Burtin",
+  "bugs": {
+    "url": "https://github.com/HanaPoulpe/blog/issues"
+  },
+  "description": "![python](https://img.shields.io/static/v1?label=Python&message=3.12&logo=Python&color=3776AB) [![python-tests](https://github.com/HanaPoulpe/blog/actions/workflows/python-test.yml/badge.svg)](https://github.com/HanaPoulpe/blog/actions/workflows/python-test.yml) [![CodeQL](https://github.com/HanaPoulpe/blog/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/HanaPoulpe/blog/actions/workflows/github-code-scanning/codeql) [![codecov](https://codecov.io/github/HanaPoulpe/blog/graph/badge.svg?token=D5J8G4P5RC)](https://codecov.io/github/HanaPoulpe/blog)",
+  "devDependencies": {
+    "stylelint": "^16.7.0",
+    "stylelint-config-standard": "^36.0.1"
+  },
+  "homepage": "https://github.com/HanaPoulpe/blog#readme",
+  "license": "ISC",
+  "main": "index.js",
+  "name": "blog",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HanaPoulpe/blog.git"
+  },
+  "scripts": {
+    "stylelint": "stylelint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "version": "1.0.0"
+}
