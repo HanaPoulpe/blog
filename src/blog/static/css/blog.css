@@ -98,5 +98,12 @@ footer {
 }
 
 .container {
+    margin: 0 1rem;
+    background-color: var(--dark-bg-color);
+}
+
+.content {
+    margin: 0 0.5rem;
+    padding: 0.5rem;
     background-color: var(--light-bg-color);
 }

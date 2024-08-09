@@ -37,7 +37,7 @@
         {% wagtailuserbar %}
         {% include "includes/header.html" %}
 
-        {% block content %}{% endblock %}
+        <div class="content">{% block content %}{% endblock %}</div>
         {% include "includes/footer.html" %}
 
         {# Global javascript #}
