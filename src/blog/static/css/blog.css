@@ -13,6 +13,9 @@
 
     /* Font */
     --font-family: 'Poppins', sans-serif;
+
+    /* Decorations */
+    --dark-line-color: black;
 }
 
 body {
@@ -33,7 +36,6 @@ a {
 }
 
 .site-banner {
-    background-color: var(--dark-bg-color);
     padding: 0;
 
     a {
@@ -58,8 +60,26 @@ a {
 }
 
 .breadcrumb {
+    padding: 0 0.5rem;
+    border-bottom: 1px solid var(--dark-line-color);
+}
+
+header {
     background-color: var(--dark-bg-color);
-    padding: 0 0.5rem 1rem;
+}
+
+nav {
+    padding: 0.1rem;
+    margin: 0.3rem;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+
+    p {
+        background-color: var(--light-bg-color);
+        margin: 0.1rem;
+        padding: 0.1rem 0.5rem;
+    }
 }
 
 .container {
