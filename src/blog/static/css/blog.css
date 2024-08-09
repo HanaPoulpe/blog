@@ -82,6 +82,21 @@ nav {
     }
 }
 
+footer {
+    padding: 0.1rem;
+    margin: 0;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    background-color: var(--dark-bg-color);
+
+    p {
+        margin: 0.5rem 0.1rem 0.1rem;
+        padding: 0.1rem 0.5rem;
+        background-color: var(--light-bg-color);
+    }
+}
+
 .container {
     background-color: var(--light-bg-color);
 }
