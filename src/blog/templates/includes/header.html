@@ -4,7 +4,7 @@
 {% block header %}
     {% get_site_root as site_root %}
     <header>
-    <div class="siteBanner" style="background: {{ settings.website.BlogSettings.banner_color }}">
+    <div class="site-banner" style="background: {{ settings.website.BlogSettings.banner_color }}">
         <a href="{% pageurl site_root %}">
             <h1 style="color: {{ settings.website.BlogSettings.title_color }};">{{ site_root.get_site.site_name }}</h1>
             {% if settings.website.BlogSettings.banner %}
@@ -14,10 +14,10 @@
     </div>
 
     {% get_current_page_location as location %}
-    <div>
-        <a href="{% pageurl site_root %}"><i class="fa-solid fa-house"></i></a>
+    <div class="breadcrumb">
+        <a href="{% pageurl site_root %}"><i class="fa-solid fa-house"></i></a> >
         {% for parent in location %}
-            <a href="{% pageurl parent %}">{{ parent.title }}</a> /
+            <a href="{% pageurl parent %}">{{ parent.title }}</a> >
         {% endfor %}
     </div>
 

@@ -1,8 +1,44 @@
-.siteBanner {
-    height: 20em;
-    width: 100%;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+    /* Backgrounds */
+    --page-gb-color: #23162c;
+    --light-bg-color: #34264d;
+    --dark-bg-color: #1a1128;
+
+    /* Text */
+    --text-color: #a3fee4;
+    --light-text-color: #c2e8ee;
+    --dark-text-color: #2ca4aa;
+
+    /* Font */
+    --font-family: 'Poppins', sans-serif;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    background-color: var(--page-gb-color);
+    font-size: 1rem;
+}
+
+a {
+    color: var(--light-text-color);
+    text-decoration: none;
+    transition: color 0.3s;
+
+    &:hover {
+        color: var(--dark-text-color);
+    }
+}
+
+.site-banner {
+    background-color: var(--dark-bg-color);
+    padding: 0;
 
     a {
+        padding: 0;
+
         img {
             margin: 0;
             border: none;
@@ -10,13 +46,22 @@
         }
 
         h1 {
-            margin: 2rem 8rem;
-            font-size: 12rem;
+            margin: 1rem 8rem;
+            font-size: 11rem;
             vertical-align: center;
             position: absolute;
             z-index: 1;
             -webkit-text-stroke-width: 2px;
-            -webkit-text-stroke-color: #000000;
+            -webkit-text-stroke-color: #000;
         }
     }
+}
+
+.breadcrumb {
+    background-color: var(--dark-bg-color);
+    padding: 0 0.5rem 1rem;
+}
+
+.container {
+    background-color: var(--light-bg-color);
 }

@@ -33,6 +33,7 @@
     </head>
 
     <body class="{% block body_class %}{% endblock %}">
+    <div class="container">
         {% wagtailuserbar %}
         {% include "includes/header.html" %}
 
@@ -46,5 +47,6 @@
         {% block extra_js %}
         {# Override this in templates to add extra javascript #}
         {% endblock %}
+    </div>
     </body>
 </html>
