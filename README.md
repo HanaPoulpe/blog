@@ -3,6 +3,7 @@
 ![python](https://img.shields.io/static/v1?label=Python&message=3.12&logo=Python&color=3776AB)
 [![python-tests](https://github.com/HanaPoulpe/blog/actions/workflows/python-test.yml/badge.svg)](https://github.com/HanaPoulpe/blog/actions/workflows/python-test.yml)
 [![CodeQL](https://github.com/HanaPoulpe/blog/actions/workflows/github-code-scanning/codeql/badge.svg)](https://github.com/HanaPoulpe/blog/actions/workflows/github-code-scanning/codeql)
+![Known Vulnerabilities](https://snyk.io/test/github/HanaPoulpe/blog/badge.svg)
 [![codecov](https://codecov.io/github/HanaPoulpe/blog/graph/badge.svg?token=D5J8G4P5RC)](https://codecov.io/github/HanaPoulpe/blog)
 
 # How to setup
