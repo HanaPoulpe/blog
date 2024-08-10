@@ -35,6 +35,11 @@ a {
     }
 }
 
+/* Text */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--light-text-color);
+}
+
 .site-banner {
     padding: 0;
 
@@ -106,4 +111,45 @@ footer {
     margin: 0 0.5rem;
     padding: 0.5rem;
     background-color: var(--light-bg-color);
+}
+
+/* Cards */
+.vertical {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.horizontal {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.card {
+    margin: 0.5rem;
+    padding: 1rem;
+    background-color: var(--dark-bg-color);
+    border-radius: 0.2rem;
+    box-shadow: 0 0 0.5rem rgb(0 0 0 / 20%);
+
+    .card-head {
+        padding: 0;
+
+        img {
+            margin: 0;
+            border: none;
+            object-fit: cover;
+        }
+    }
+
+    .card-body {
+        margin: 0.5rem;
+    }
+
+    .card-meta {
+        font-size: small;
+        font-style: italic;
+        font-weight: 350;
+    }
 }

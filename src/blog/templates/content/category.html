@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+    <div class="vertical">
+    <div class="card">
+        <div class="card-head">
+        {% if page.logo %}
+            {% srcset_image page.logo fill-{400x128,600x128,800x128} sizes="(max-width: 500px) 400w, (max-width: 700px) 600w, (max-width: 900px) 800w" height="128px" width="100%" %}
+        {% endif %}
+        <h1>{{ page.title }}</h1>
+        </div>
+        {% if page.description %}
+            <div class="card-body">
+                {{ page.description|richtext }}
+            </div>
+        {% endif %}
+    </div>
+
+    {% if articles %}<h2 class="card">Latest articles:</h2>{% endif %}
+    <div class="horizontal">
+    {% for article in articles %}
+        <div class="card">
+            <div class="card-head">
+                {% if article.logo %}
+                {% srcset_image page.logo fill-{400x64,600x64,800x64} sizes="(max-width: 500px) 400w, (max-width: 700px) 600w, (max-width: 900px) 800w" height="32px" width="100%" %}
+                {% endif %}
+                <h3><a href="{% pageurl article %}">{{ article.title }}</a></h3>
+            </div>
+            <div class="card-meta">
+                Date: {{ article.first_published_at }} - Author: {{ article.author }}
+            </div>
+            <div class="card-body">
+                {{ article.introduction|richtext }}
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+    </div>
+{% endblock %}

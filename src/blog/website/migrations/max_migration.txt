@@ -1,1 +1,1 @@
-0002_blogsettings_banner_blogsettings_banner_color_and_more
+0003_alter_blogsettings_banner_color
