@@ -26,6 +26,7 @@ class Base(Configuration):
         "blog.home",
         "blog.search",
         "blog.website",
+        "blog.content",
         "wagtail.contrib.forms",
         "wagtail.contrib.redirects",
         "wagtail.contrib.settings",
