@@ -1,3 +1,5 @@
+from typing import ClassVar
+
 from django.db import models as django_models
 from wagtail import models
 from wagtail.admin import panels
@@ -22,3 +24,7 @@ class HomePage(models.Page):
         panels.FieldPanel("logo"),
         panels.FieldPanel("introduction"),
     ]
+
+    # Tree management
+    subpage_types: ClassVar[list[str]] = ["content.Category"]
+    parent_page_types: ClassVar[list[str]] = ["wagtailcore.Page"]
