@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load wagtailcore_tags wagtailimages_tags %}
+
+{% block content %}
+    <div class="vertical" style="width: 95%">
+    <div class="card">
+        <div class="card-head">
+        {% if page.logo %}
+            {% srcset_image page.logo fill-{400x128,600x128,800x128} sizes="(max-width: 500px) 400w, (max-width: 700px) 600w, (max-width: 900px) 800w" height="128px" width="100%" %}
+        {% endif %}
+        <h1>{{ page.title }}</h1>
+        </div>
+        <div class="card-meta">
+            Published on {{ page.first_published_at }} by {{ page.owner }}<br />
+            {% if page.first_published_at != page.latest_revision_created_at %}Last updated on {{ page.latest_revision_created_at }}{% endif %}
+        </div>
+        <div class="card-body">
+            {{ page.content|richtext }}
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-head horizontal">
+            <h3><a href="{% pageurl page.category %}">{{ page.category.title }}</a></h3>
+        </div>
+        {% if page.category.sub_categories %}
+        <div class="horizontal">
+            {% for sub_category in page.category.sub_categories %}
+            <div class="card-body"><a href="{% pageurl sub_category %}">{{ sub_category.title }}</a></div>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    {% if page.category.articles.count > 1 %}
+        <div class="horizontal">
+        {% for sibling in page.category.articles %}
+            {% if sibling.id != page.id %}
+                <div class="card">
+                    <div class="card-head">
+                        <h4><a href="{% pageurl sibling %}">{{ sibling.title }}</a></h4>
+                    </div>
+                    <div class="card-body">{{ sibling.summary }}</div>
+                </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+    </div>
+{% endblock %}
