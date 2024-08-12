@@ -4,8 +4,10 @@ import attrs
 import pytest
 from blog.content import models as content_models
 from django import http
+from django import test as django_test
 from django.contrib.auth import models as auth_models
 
+from tests import utils as test_utils
 from tests.factories import content as content_factory
 
 
@@ -85,6 +87,15 @@ class TestCategory:
         for sub_category, sub_articles in sub_categories_list:
             assert len(sub_articles) == min(sub_category.articles.count(), 3)
 
+    def test_render(
+        self,
+        category: content_models.Category,
+        client: django_test.Client,
+    ) -> None:
+        response = client.get(category.get_url())
+
+        assert response.status_code == 200
+
 
 class TestArticles:
     @pytest.fixture
@@ -106,3 +117,10 @@ class TestArticles:
 
         assert author is not None
         assert author == article.owner
+
+    def test_render(
+        self, article: content_models.Article, client: django_test.Client
+    ) -> None:
+        response = client.get(test_utils.get_full_page_path(article))
+
+        assert response.status_code == 200
