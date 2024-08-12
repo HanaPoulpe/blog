@@ -2,15 +2,48 @@
 {%  load wagtailcore_tags wagtailimages_tags %}
 
 {% block content %}
-	<div>
-        <h1>{{ page.title }}</h1>
-    </div>
-    <div class="home-intro">
-        {% if page.logo %}
-            <div class="home-intro-logo">
+    <div class="vertical" style="width: 95%">
+	<div class="card">
+    <div class="horizontal">
+        <div class="card-head">
+            {% if page.logo %}
                 {% image page.logo fill-128x128 %}
+            {% endif %}
+        </div>
+        <div class="card-body">{{ page.introduction }}</div>
+    </div>
+    </div>
+    <div class="horizontal">
+        {% for category in categories %}
+            <div class="card vertical">
+                <div class="card-head">
+                    <h2><a href="{% pageurl category %}">{{ category.title }}</a></h2>
+                    {% if category.logo %}{% image page.logo fill-128x128 %}{% endif %}
+                </div>
+                <div class="card-body">
+                    {% if category.description %}
+                        {{ category.description|richtext }}
+                    {% endif %}
+                    {% if category.sub_categories %}
+                        <div class="card-body">
+                        <ul>
+                            {% for sub_categories in category.sub_categories %}
+                            <li><a href="{% pageurl sub_categories %}">{{ sub_categories.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    {% endif %}
+                </div>
+                {% if category.articles %}
+                Recent articles:
+                <ul>
+                {% for article in category.articles|slice:3 %}
+                    <li class="card-body"><a href="{% pageurl article %}">{{ article.title }}</a></li>
+                {% endfor %}
+                </ul>
+                {% endif %}
             </div>
-        {% endif %}
-        <div>{{ page.introduction }}</div>
+        {% endfor %}
+    </div>
     </div>
 {% endblock %}
