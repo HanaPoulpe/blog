@@ -2,8 +2,8 @@ from blog.home import models as home_models
 from django import test as django_test
 
 
-class TestHomePageView:
-    def test_get_index(
+class TestHomePage:
+    def test_render(
         self,
         home_page: home_models.HomePage,
         client: django_test.Client,

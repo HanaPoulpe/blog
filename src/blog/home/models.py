@@ -1,8 +1,11 @@
-from typing import ClassVar
+from typing import Any, ClassVar
 
+from django import http
 from django.db import models as django_models
 from wagtail import models
 from wagtail.admin import panels
+
+from blog.content import models as content_models
 
 
 class HomePage(models.Page):
@@ -28,3 +31,16 @@ class HomePage(models.Page):
     # Tree management
     subpage_types: ClassVar[list[str]] = ["content.Category"]
     parent_page_types: ClassVar[list[str]] = ["wagtailcore.Page"]
+
+    # Context management
+    def get_context(self, request: http.HttpRequest) -> dict[str, Any]:
+        ctx: dict[str, Any] = super().get_context(request)
+        ctx["categories"] = self.get_categories()
+
+        return ctx
+
+    def get_categories(self) -> django_models.QuerySet[content_models.Category]:
+        categories: django_models.QuerySet[content_models.Category] = (
+            content_models.Category.objects.child_of(self).live().order_by("title")
+        )
+        return categories
