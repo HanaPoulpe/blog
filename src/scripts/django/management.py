@@ -44,11 +44,11 @@ class _Manage(base.Command):
         *args: Any,
         **kwargs: Any,
     ) -> list[str]:
-        settings = settings or os.environ.get(
-            "DJANGO_SETTINGS_MODULE", self.django_settings
+        settings = os.environ.get(
+            "DJANGO_SETTINGS_MODULE", settings or self.django_settings
         )
-        configuration = configuration or os.environ.get(
-            "DJANGO_CONFIGURATION", self.django_configuration
+        configuration = os.environ.get(
+            "DJANGO_CONFIGURATION", configuration or self.django_configuration
         )
 
         return [
@@ -65,8 +65,10 @@ class _Manage(base.Command):
         *args: Any,
         **kwargs: Any,
     ) -> None:
-        os.environ["DJANGO_SETTINGS_MODULE"] = settings or self.django_settings
-        os.environ["DJANGO_CONFIGURATION"] = configuration or self.django_configuration
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings or self.django_settings)
+        os.environ.setdefault(
+            "DJANGO_CONFIGURATION", configuration or self.django_configuration
+        )
 
         manage.main(
             self.get_django_args(
