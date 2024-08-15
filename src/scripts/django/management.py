@@ -158,6 +158,8 @@ class Shell(_Manage):
     description: ClassVar[str] = "Starts Django shell"
     django_command: ClassVar[str] = "shell"
 
+    django_configuration = "Shell"
+
 
 class CreateSuperUser(_Manage):
     name: ClassVar[str] = "django_createsuperuser"
