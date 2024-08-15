@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["HanaPoulpe <hana@hanapoulpe.org>"]
 readme = "README.md"
+packages = [
+    {include="blog", from="src"},
+    {include="scripts", from="src"}
+]
 
 [tool.mypy]
 python_version = "3.12"
