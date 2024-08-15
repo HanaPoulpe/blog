@@ -98,3 +98,12 @@ repos:
           types: [css, scss]
           require_serial: true
           verbose: true
+
+        - id: docker-entrypoint
+          name: Docker Entrypoint
+          entry: poetry run docker-entrypoint-test
+          language: python
+          language_version: "3.12"
+          types: [sh]
+          require_serial: true
+          verbose: true

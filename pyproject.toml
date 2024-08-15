@@ -148,6 +148,9 @@ django-migrate = "scripts:django_migrate"
 django-createsuperuser = "scripts:django_createsuperuser"
 collectstatic = "scripts:django_collectstatic"
 
+# Docker
+docker-entrypoint-test = "scripts:docker_entrypoint_tests"
+
 [tool.poetry.dependencies]
 python = "^3.12"
 termcolor = "^2.4.0"
