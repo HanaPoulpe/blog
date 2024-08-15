@@ -2,7 +2,16 @@ import argparse
 import pathlib
 from typing import ClassVar
 
-from ruff import __main__ as ruff
+try:
+    from ruff import __main__ as ruff
+except ImportError:
+
+    class _Ruff:
+        @staticmethod
+        def find_ruff_bin() -> str:
+            return ""
+
+    ruff = _Ruff()
 
 from scripts import base
 

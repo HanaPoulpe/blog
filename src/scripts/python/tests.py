@@ -6,12 +6,8 @@ import sys
 from collections.abc import Generator
 from typing import Any, ClassVar
 
-import pytest
 import termcolor
-from importlinter import cli as importlinter
-from mypy import main as mypy
 
-import coverage
 from scripts import base
 
 _TEST_REGISTRY: list["Pytest"] = []
@@ -48,6 +44,8 @@ class Pytest(base.CommandWithParser, base.Command):
             *self.get_default_options(),
             *self._expand_files(self.get_default_files()),
         ]
+
+        import pytest
 
         if pytest.cmdline.main(arguments):
             raise base.CommandError()
@@ -201,6 +199,8 @@ class Coverage(base.Command):
         return parser
 
     def handle(self, fail_under: int, no_report: bool, *args: Any, **kwargs: Any) -> None:
+        import coverage
+
         cov = coverage.Coverage()
 
         cov.start()
@@ -232,6 +232,8 @@ class MyPy(base.CommandWithParser):
         return [str(f) for f in self.default_files]
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
+        from mypy import main as mypy
+
         try:
             mypy.main(args=list(args) or self.get_default_files(), clean_exit=True)
         except SystemExit as err:
@@ -244,5 +246,7 @@ class ImportLinter(base.Command):
     cwd = base.PROJECT_ROOT.parent
 
     def handle(self, *args: Any, **kwargs: Any) -> None:
+        from importlinter import cli as importlinter
+
         if importlinter.lint_imports():
             raise base.CommandError()
