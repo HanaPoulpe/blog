@@ -71,3 +71,19 @@ class UnitTests(_DjangoTests):
 
     def get_default_files(self, *args: Any, **kwargs: Any) -> list[pathlib.Path | str]:
         return ["unit/**/test_*.py"]
+
+
+class ShellTests(_DjangoTests):
+    name: ClassVar[str] = "shell_tests"
+    description: ClassVar[str] = "Runs python shel tests"
+    django_configuration: ClassVar[str] = "Shell"
+
+    collect_static: ClassVar[bool] = True
+
+    def get_default_files(self, *args: Any, **kwargs: Any) -> list[pathlib.Path | str]:
+        return [
+            "integration/interfaces/agnostic/**/test_*.py",
+            "integration/interfaces/shell/**/test_*.py",
+            "functional/blog/**/test_*.py",
+            "unit/**/test_*.py",
+        ]
