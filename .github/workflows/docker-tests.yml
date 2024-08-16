@@ -1,0 +1,46 @@
+name: Docker Tests
+run-name: docker-tests
+'on':
+  pull_request:
+    branches:
+    - main
+  push:
+    branches:
+    - main
+jobs:
+  test-entrypoint:
+    name: 'Docker Tests: Entrypoint'
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Build
+      uses: ./.github/actions/build-docker-image
+    - id: run-entrypoint-tests
+      name: Run docker entrypoint tests
+      run: docker run --env-file src/.env.example blog tests
+  tests-passed:
+    container: python:3.12-slim-bookworm
+    env:
+      RESULTS: ${{ needs.test-entrypoint.result }}
+    if: ${{ always() }}
+    name: 'Docker test: OK'
+    needs:
+    - test-entrypoint
+    runs-on: ubuntu-latest
+    steps:
+    - id: test-results
+      name: Test results
+      run: |-
+        echo $RESULTS
+        for r in $RESULTS
+        do
+            if [ $r = "success" ] || [ $r = "skipped" ];
+            then
+                true
+            else
+                echo "Some tests failed"
+                exit 1
+            fi
+        done
+        echo "All tests passed"

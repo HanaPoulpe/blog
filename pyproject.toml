@@ -4,6 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["HanaPoulpe <hana@hanapoulpe.org>"]
 readme = "README.md"
+packages = [
+    {include="blog", from="src"},
+    {include="scripts", from="src"}
+]
 
 [tool.mypy]
 python_version = "3.12"
@@ -138,6 +142,7 @@ python-check-imports = "scripts:import_linter"
 ci-python-tests = "scripts:github_python_test"
 ci-approval-bot = "scripts:github_approval_bot"
 ci-frontend = "scripts:github_frontend_test"
+ci-docker = "scripts:github_docker_test"
 
 # Django
 django-start = "scripts:django_runserver"
@@ -147,6 +152,9 @@ django-makemigrations = "scripts:django_makemigrations"
 django-migrate = "scripts:django_migrate"
 django-createsuperuser = "scripts:django_createsuperuser"
 collectstatic = "scripts:django_collectstatic"
+
+# Docker
+docker-entrypoint-test = "scripts:docker_entrypoint_tests"
 
 [tool.poetry.dependencies]
 python = "^3.12"

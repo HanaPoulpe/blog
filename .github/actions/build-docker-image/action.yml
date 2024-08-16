@@ -1,0 +1,12 @@
+description: Builds Docker image for the application.
+name: Build Docker Image
+runs:
+  steps:
+  - name: Setup QEMU
+    uses: docker/setup-qemu-action@v3
+  - name: Setup Buildx
+    uses: docker/setup-buildx-action@v3
+  - name: Build docker image
+    run: docker build . -t blog --build-arg debug=1
+    shell: bash
+  using: composite

@@ -10,7 +10,7 @@
 ## Install dependencies:
 
 ```shell
-pip install -r requirements.txt
+pip install -r requirements/dev.txt
 poetry install --with dev
 ```
 

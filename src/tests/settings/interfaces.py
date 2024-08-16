@@ -7,3 +7,7 @@ class InterfaceMixin(interfaces.InterfaceMixin):
 
 class Site(interfaces.Site):
     pass
+
+
+class Shell(InterfaceMixin, interfaces.Shell):
+    pass

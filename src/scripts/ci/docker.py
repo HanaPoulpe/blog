@@ -1,48 +1,78 @@
 import collections
-from typing import Any, ClassVar
+from typing import Any
 
 from . import _base as base
 
 
-class FrontEndTests(base.Workflow):
-    name = "github_frontend_test"
-    workflow_name: ClassVar[str] = "Frontend tests"
-    workflow_id: ClassVar[str] = "frontend-tests"
-    description: ClassVar[str] = "Runs frontend tests for github actions."
+class DockerBuildImageAction(base.Action):
+    action_name = "Build Docker Image"
+    action_id = "build-docker-image"
+    description = "Builds Docker image for the application."
+
+    def get_steps(self, *args: Any, **kwargs: Any) -> list[dict[str, Any]]:
+        return [
+            {
+                "name": "Setup QEMU",
+                "uses": "docker/setup-qemu-action@v3",
+            },
+            {
+                "name": "Setup Buildx",
+                "uses": "docker/setup-buildx-action@v3",
+            },
+            {
+                "name": "Build docker image",
+                "shell": "bash",
+                "run": "docker build . -t blog --build-arg debug=1",
+            },
+        ]
+
+
+class GithubDockerTest(base.Workflow):
+    name = "github_docker_test"
+    workflow_name = "Docker Tests"
+    workflow_id = "docker-tests"
+    description = "Creates Docker tests for github actions."
 
     def get_jobs(self, *args: Any, **kwargs: Any) -> collections.OrderedDict[str, Any]:
         jobs: collections.OrderedDict[str, Any] = collections.OrderedDict()
-        jobs = self.get_css_linter(jobs, *args, **kwargs)
+        jobs = self.get_tests(jobs, *args, **kwargs)
         jobs = self.get_tests_passed(jobs, *args, **kwargs)
 
         return jobs
 
-    def get_css_linter(
+    def get_tests(
         self,
         jobs: collections.OrderedDict[str, Any],
         *args: Any,
         **kwargs: Any,
     ) -> collections.OrderedDict[str, Any]:
-        jobs["css-linter"] = {
-            "name": "CSS linter",
+        jobs["test-entrypoint"] = {
+            "name": "Docker Tests: Entrypoint",
             "runs-on": "ubuntu-latest",
             "steps": [
                 self.get_checkout(),
-                *self.get_npm_setup(),
-                self.get_css_file_changed(),
+                self.get_build(),
                 {
-                    "name": "Run CSS linter",
-                    "id": "run-css-linter",
-                    "if": "${{ steps.file-changed.outputs.any_changed == 'true' }}",
-                    "run": (
-                        "npm run stylelint "
-                        "${{ steps.file-changed.outputs.all_changed_files }}"
-                    ),
+                    "name": "Run docker entrypoint tests",
+                    "id": "run-entrypoint-tests",
+                    "run": "docker run --env-file src/.env.example blog tests",
                 },
             ],
         }
-
         return jobs
+
+    def create(self, *args: Any, **kwargs: Any) -> None:
+        super().create(*args, **kwargs)
+
+        build_action = DockerBuildImageAction.as_command()
+        build_action(["create"])
+
+    @staticmethod
+    def get_build() -> dict[str, Any]:
+        return {
+            "name": "Build",
+            "uses": "./.github/actions/build-docker-image",
+        }
 
     def get_tests_passed(
         self,
@@ -62,7 +92,7 @@ class FrontEndTests(base.Workflow):
                 all_required.append(name)
 
         jobs["tests-passed"] = {
-            "name": "Frontend test: OK",
+            "name": "Docker test: OK",
             "runs-on": "ubuntu-latest",
             "container": "python:3.12-slim-bookworm",
             "if": "${{ always() }}",
@@ -97,37 +127,3 @@ class FrontEndTests(base.Workflow):
         }
 
         return jobs
-
-    def get_npm_setup(self) -> list[dict[str, Any]]:
-        return [
-            {
-                "name": "Install NPM",
-                "id": "install-npm",
-                "uses": "actions/setup-node@v4",
-                "with": {
-                    "node-version": "20",
-                },
-            },
-            {
-                "name": "Install NPM dependencies",
-                "id": "install-dependencies",
-                "run": "npm install",
-            },
-        ]
-
-    @staticmethod
-    def get_css_file_changed() -> dict[str, Any]:
-        return {
-            "name": "File changed",
-            "id": "file-changed",
-            "uses": "tj-actions/changed-files@v44",
-            "with": {
-                "files_yaml": "\n".join(
-                    [
-                        "python:",
-                        "  - '**/*.css'",
-                        "  - '**/*.scss'",
-                    ]
-                ),
-            },
-        }
