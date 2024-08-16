@@ -39,7 +39,7 @@ jobs:
     env:
       RESULTS: ${{ needs.css-linter.result }}
     if: ${{ always() }}
-    name: 'Python test: OK'
+    name: 'Frontend test: OK'
     needs:
     - css-linter
     runs-on: ubuntu-latest

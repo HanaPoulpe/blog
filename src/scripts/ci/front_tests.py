@@ -62,7 +62,7 @@ class FrontEndTests(base.Workflow):
                 all_required.append(name)
 
         jobs["tests-passed"] = {
-            "name": "Python test: OK",
+            "name": "Frontend test: OK",
             "runs-on": "ubuntu-latest",
             "container": "python:3.12-slim-bookworm",
             "if": "${{ always() }}",
