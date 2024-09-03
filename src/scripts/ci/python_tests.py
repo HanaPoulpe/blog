@@ -436,7 +436,7 @@ class GitHubPythonTest(base.Workflow):
         return {
             "name": "File changed",
             "id": "file-changed",
-            "uses": "tj-actions/changed-files@v44",
+            "uses": "tj-actions/changed-files@v45",
             "with": {
                 "files_yaml": "\n".join(
                     [
