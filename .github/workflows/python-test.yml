@@ -20,7 +20,7 @@ jobs:
       uses: ./.github/actions/build
     - id: file-changed
       name: File changed
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         files_yaml: |-
           python:
@@ -67,7 +67,7 @@ jobs:
       uses: ./.github/actions/build
     - id: file-changed
       name: File changed
-      uses: tj-actions/changed-files@v44
+      uses: tj-actions/changed-files@v45
       with:
         files_yaml: |-
           python:
