@@ -174,7 +174,7 @@ django-linear-migrations = "^2.13.0"
 attrs = "^24.2.0"
 
 [tool.poetry.group.dev.dependencies]
-pytest = "^8.3.2"
+pytest = "^8.3.3"
 ruff = "^0.6.5"
 mypy = "^1.11.2"
 SQLite3-0611 = "^0.0.1"
