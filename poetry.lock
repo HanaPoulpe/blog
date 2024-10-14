@@ -371,13 +371,13 @@ test = ["boto3", "celery", "django-storages", "pytest", "pytest-cov", "pytest-dj
 
 [[package]]
 name = "django-linear-migrations"
-version = "2.13.0"
+version = "2.15.0"
 description = "Ensure your migrations are linear."
 optional = false
-python-versions = ">=3.8"
+python-versions = ">=3.9"
 files = [
-    {file = "django_linear_migrations-2.13.0-py3-none-any.whl", hash = "sha256:4e26c5b123001371461a0b71b6df56e36e52909afe0538bbceb438f9e33c90fb"},
-    {file = "django_linear_migrations-2.13.0.tar.gz", hash = "sha256:91b5f29c7ba0c56131b5d789c71f5472431569e2f7a5990dec5f939e41b5300f"},
+    {file = "django_linear_migrations-2.15.0-py3-none-any.whl", hash = "sha256:44978bc3666586ebf4dab072186bb181731472e031653e928ad7a284dc99267b"},
+    {file = "django_linear_migrations-2.15.0.tar.gz", hash = "sha256:99c66b6399114c21789070e94e91ed64496482ae1b36bf06d071964792579f26"},
 ]
 
 [package.dependencies]
@@ -1696,4 +1696,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "577ae7d0f64ac540ad8aa1df86b35bee2e4d97f999c9f639afedc165cfa7196a"
+content-hash = "5e52cf8dadc4ab55bef730ed5fb161c991c704fc2193a19c652aa0cbb3f65e49"

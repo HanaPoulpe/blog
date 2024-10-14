@@ -170,7 +170,7 @@ frozendict = "^2.4.5"
 faker = "^30.1.0"
 django-health-check = "^3.18.3"
 psycopg2-binary = "^2.9.9"
-django-linear-migrations = "^2.13.0"
+django-linear-migrations = "^2.15.0"
 attrs = "^24.2.0"
 
 [tool.poetry.group.dev.dependencies]
