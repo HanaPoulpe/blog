@@ -169,7 +169,7 @@ frozenlist = "^1.4.1"
 frozendict = "^2.4.6"
 faker = "^30.6.0"
 django-health-check = "^3.18.3"
-psycopg2-binary = "^2.9.9"
+psycopg2-binary = "^2.9.10"
 django-linear-migrations = "^2.15.0"
 attrs = "^24.2.0"
 
