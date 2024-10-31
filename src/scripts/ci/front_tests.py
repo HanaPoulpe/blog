@@ -64,7 +64,7 @@ class FrontEndTests(base.Workflow):
         jobs["tests-passed"] = {
             "name": "Frontend test: OK",
             "runs-on": "ubuntu-latest",
-            "container": "python:3.12-slim-bookworm",
+            "container": "python:3.13-slim-bookworm",
             "if": "${{ always() }}",
             "needs": all_required,
             "env": {

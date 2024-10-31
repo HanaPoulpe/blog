@@ -42,7 +42,7 @@ repos:
           name: Poetry Install
           entry: poetry install
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           pass_filenames: false
           verbose: true
 
@@ -51,7 +51,7 @@ repos:
           name: Ruff
           entry: poetry run python-ruff
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           types: [python]
           require_serial: true
           verbose: true
@@ -59,7 +59,7 @@ repos:
           name: Format
           entry: poetry run python-format
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           types: [python]
           require_serial: true
           verbose: true
@@ -67,7 +67,7 @@ repos:
         #  name: Import Linter
         #  entry: poetry run python-import-linter
         #  language: python
-        #  language_version: "3.12"
+        #  language_version: "3.13"
         #  types: [python]
         #  require_serial: true
         #  verbose: true
@@ -76,7 +76,7 @@ repos:
           name: Python Tests
           entry: poetry run python-all-tests
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           types: [python]
           require_serial: true
           verbose: true
@@ -85,7 +85,7 @@ repos:
           name: Python Type Check
           entry: poetry run python-type-check
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           types: [python]
           require_serial: true
           verbose: true
@@ -103,7 +103,7 @@ repos:
           name: Docker Entrypoint
           entry: poetry run docker-entrypoint-test
           language: python
-          language_version: "3.12"
+          language_version: "3.13"
           types: [sh]
           require_serial: true
           verbose: true
