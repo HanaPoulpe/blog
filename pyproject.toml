@@ -61,7 +61,7 @@ exclude = [
 include = ["pyproject.toml", "src/**/*.py", "scripts/**/*.py"]
 line-length = 90
 indent-width = 4
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = [

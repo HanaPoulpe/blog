@@ -9,7 +9,7 @@ run-name: python-test
     - main
 jobs:
   ruff:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     if: ${{ github.event_name == 'pull_request' }}
     name: 'Python linter: ruff'
     runs-on: ubuntu-latest
@@ -37,7 +37,7 @@ jobs:
       run: poetry run python-format ${{ steps.file-changed.outputs.all_changed_files
         }}
   lock:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     if: ${{ github.event_name == 'pull_request' }}
     name: 'Python linter: poetry lock check'
     runs-on: ubuntu-latest
@@ -50,7 +50,7 @@ jobs:
       name: Run poetry lock check
       run: poetry lock --check
   mypy:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -78,7 +78,7 @@ jobs:
       run: poetry run python-type-check ${{ steps.file-changed.outputs.all_changed_files
         }}
   blog_site_tests:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -105,7 +105,7 @@ jobs:
       name: Run blog_site_tests
       run: poetry run python-test-suite blog_site_tests
   all_apps_tests:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -132,7 +132,7 @@ jobs:
       name: Run all_apps_tests
       run: poetry run python-test-suite all_apps_tests
   unit_tests:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -159,7 +159,7 @@ jobs:
       name: Run unit_tests
       run: poetry run python-test-suite unit_tests
   shell_tests:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -186,7 +186,7 @@ jobs:
       name: Run shell_tests
       run: poetry run python-test-suite shell_tests
   coverage:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       DATABASE_HOST: postgres
       DATABASE_NAME: postgres
@@ -225,7 +225,7 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         verbose: 'true'
   python-tests-passed:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       RESULTS: |-
         ${{ needs.ruff.result }}

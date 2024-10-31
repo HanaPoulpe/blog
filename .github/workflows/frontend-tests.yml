@@ -35,7 +35,7 @@ jobs:
       name: Run CSS linter
       run: npm run stylelint ${{ steps.file-changed.outputs.all_changed_files }}
   tests-passed:
-    container: python:3.12-slim-bookworm
+    container: python:3.13-slim-bookworm
     env:
       RESULTS: ${{ needs.css-linter.result }}
     if: ${{ always() }}
