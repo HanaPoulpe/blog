@@ -173,7 +173,7 @@ attrs = "^24.2.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.3"
-ruff = "^0.7.2"
+ruff = "^0.7.3"
 mypy = "^1.12.1"
 SQLite3-0611 = "^0.0.1"
 coverage = "^7.6.4"
