@@ -506,13 +506,13 @@ lxml = ["lxml (>=4.2.0,<5)"]
 
 [[package]]
 name = "environs"
-version = "11.0.0"
+version = "11.2.0"
 description = "simplified environment variable parsing"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "environs-11.0.0-py3-none-any.whl", hash = "sha256:e0bcfd41c718c07a7db422f9109e490746450da38793fe4ee197f397b9343435"},
-    {file = "environs-11.0.0.tar.gz", hash = "sha256:069727a8f73d8ba8d033d3cd95c0da231d44f38f1da773bf076cef168d312ee8"},
+    {file = "environs-11.2.0-py3-none-any.whl", hash = "sha256:536fc3572fb32b67896bdf4a9fb77eceeeca85f873123268e3a035804fbff0e3"},
+    {file = "environs-11.2.0.tar.gz", hash = "sha256:87c5759dad117ebd36d8d10a24caf13ec1056b6cd42343a758b08ac6b9195be0"},
 ]
 
 [package.dependencies]
@@ -520,7 +520,7 @@ marshmallow = ">=3.13.0"
 python-dotenv = "*"
 
 [package.extras]
-dev = ["environs[tests]", "pre-commit (>=3.5,<4.0)", "tox"]
+dev = ["environs[tests]", "pre-commit (>=3.5,<5.0)", "tox"]
 django = ["dj-database-url", "dj-email-url", "django-cache-url"]
 tests = ["environs[django]", "pytest"]
 
@@ -1702,4 +1702,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "a0a2c83b443333030debdf9d47f5a8287262567ba4877782d454837c26e7009e"
+content-hash = "c0af5f2e595073615672f78dae659f754df554be2bd4276c1c8e5f53c443464e"
