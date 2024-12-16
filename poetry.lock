@@ -463,13 +463,13 @@ Django = ">=3.2"
 
 [[package]]
 name = "django-types"
-version = "0.19.1"
+version = "0.20.0"
 description = "Type stubs for Django"
 optional = false
-python-versions = ">=3.7,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "django_types-0.19.1-py3-none-any.whl", hash = "sha256:b3f529de17f6374d41ca67232aa01330c531bbbaa3ac4097896f31ac33c96c30"},
-    {file = "django_types-0.19.1.tar.gz", hash = "sha256:5ae7988612cf6fbc357b018bbc3b3a878b65e04275cc46e0d35d66a708daff12"},
+    {file = "django_types-0.20.0-py3-none-any.whl", hash = "sha256:a0b5c2c9a1e591684bb21a93b64e50ca6cb2d3eab48f49faff1eac706bd3a9c7"},
+    {file = "django_types-0.20.0.tar.gz", hash = "sha256:4e55d2c56155e3d69d75def9eb1d95a891303f2ac19fccf6fe8056da4293fae7"},
 ]
 
 [package.dependencies]
@@ -1702,4 +1702,4 @@ wand = ["Wand (>=0.6,<1.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.12"
-content-hash = "d848924ea1c62a2b4b9f844cccb3358a1a1fbc9e65f6fd0e4d85fc1520e30af5"
+content-hash = "59105c28c90e954a503ed60a1b1c3afe1497aa8d5e27afb017c4e79983aea936"
