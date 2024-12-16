@@ -169,7 +169,7 @@ faker = "^30.6.0"
 django-health-check = "^3.18.3"
 psycopg2-binary = "^2.9.10"
 django-linear-migrations = "^2.15.0"
-attrs = "^24.2.0"
+attrs = "^24.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
