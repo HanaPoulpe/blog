@@ -174,7 +174,7 @@ attrs = "^24.3.0"
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"
 ruff = "^0.8.3"
-mypy = "^1.12.1"
+mypy = "^1.14.0"
 SQLite3-0611 = "^0.0.1"
 coverage = "^7.6.9"
 pytest-cov = "^6.0.0"
