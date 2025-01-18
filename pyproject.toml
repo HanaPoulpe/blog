@@ -1,13 +1,34 @@
-[tool.poetry]
+[project]
 name = "blog"
 version = "0.1.0"
 description = ""
-authors = ["HanaPoulpe <hana@hanapoulpe.org>"]
+authors = [
+    {name = "HanaPoulpe", email = "hana@hanapoulpe.org"}
+]
 readme = "README.md"
 packages = [
     {include="blog", from="src"},
     {include="scripts", from="src"}
 ]
+requires-python = "~=3.12"
+dependencies = [
+    "termcolor~=2.5.0",
+    "wagtail~=6.3",
+    "pyyaml~=6.0.1",
+    "django~=5.1.4",
+    "django-configurations~=2.5.1",
+    "python-dotenv~=1.0.1",
+    "environs~=11.2.1",
+    "frozenlist~=1.5.0",
+    "frozendict~=2.4.6",
+    "faker~=33.1.0",
+    "django-health-check~=3.18.3",
+    "psycopg2-binary~=2.9.10",
+    "django-linear-migrations~=2.16.0",
+    "attrs~=24.3.0",
+]
+
+[tool.poetry]
 
 [tool.mypy]
 python_version = "3.12"
@@ -125,7 +146,7 @@ forbidden_modules = [
     "scripts",
 ]
 
-[tool.poetry.scripts]
+[project.scripts]
 # Python tools
 python-ruff = "scripts:ruff"
 python-format = "scripts:ruff_format"
@@ -153,23 +174,6 @@ collectstatic = "scripts:django_collectstatic"
 
 # Docker
 docker-entrypoint-test = "scripts:docker_entrypoint_tests"
-
-[tool.poetry.dependencies]
-python = "^3.12"
-termcolor = "^2.5.0"
-wagtail = "^6.3"
-pyyaml = "^6.0.1"
-django = "^5.1.4"
-django-configurations = "^2.5.1"
-python-dotenv = "^1.0.1"
-environs = "^11.2.1"
-frozenlist = "^1.5.0"
-frozendict = "^2.4.6"
-faker = "^33.1.0"
-django-health-check = "^3.18.3"
-psycopg2-binary = "^2.9.10"
-django-linear-migrations = "^2.15.0"
-attrs = "^24.3.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.4"

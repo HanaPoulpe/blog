@@ -48,7 +48,7 @@ jobs:
       uses: ./.github/actions/build
     - id: run-lock
       name: Run poetry lock check
-      run: poetry lock --check
+      run: poetry check --strict --lock
   mypy:
     container: python:3.13-slim-bookworm
     env:
