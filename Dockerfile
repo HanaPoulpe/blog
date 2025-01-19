@@ -5,14 +5,17 @@ ARG debug
 ENV DEBUG=${debug}
 RUN echo "Debug mode: $DEBUG"
 RUN apt update && apt upgrade -y --no-install-recommends
-RUN test $DEBUG -eq 1 && \
-    apt install -y shellcheck --no-install-recommends;
+RUN test "$DEBUG" -eq 1 && \
+    apt install -y shellcheck --no-install-recommends || \
+    true;
 # Cleanup apt cache
 RUN rm -rf /var/lib/apt/lists/*
+# Install uv
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 FROM base AS build
 WORKDIR /src
-COPY poetry.lock pyproject.toml README.md ./
+COPY uv.lock pyproject.toml README.md ./
 COPY src ./src/
 COPY requirements ./requirements
 
@@ -20,21 +23,16 @@ ENV PYTHONFAULTHANDLER=1 \
     PYTHONHASHSEED=random \
     PYTHONUNBUFFERED=1
 
-# Install python build
-RUN pip install -r ./requirements/common.txt
-
-RUN poetry config virtualenvs.in-project true && \
-    poetry install --only=main --no-root && \
-    poetry build
+# Build
+RUN uv build -o ./build
 
 # Finalize
 FROM base AS release
 WORKDIR /app
 
-COPY --from=build /src/.venv /app/venv
-COPY --from=build /src/dist /app/dist
-RUN pip install ./dist/*.whl
-RUN rm -rf /app/venv /app/dist
+COPY --from=build /src/build /app/build
+RUN pip install ./build/*.whl
+RUN rm -rf /app/build
 
 RUN useradd -ms /bin/bash blog
 USER blog
