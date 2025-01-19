@@ -1,8 +1,8 @@
 import pytest
-from blog.home import models
-from blog.website.templatetags import navigation_tags
 from django import template
 
+from blog.home import models
+from blog.website.templatetags import navigation_tags
 from tests.factories import home as home_factories
 
 

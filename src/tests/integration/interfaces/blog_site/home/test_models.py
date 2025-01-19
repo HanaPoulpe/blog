@@ -1,5 +1,6 @@
-from blog.home import models as home_models
 from django import test as django_test
+
+from blog.home import models as home_models
 
 
 class TestHomePage:

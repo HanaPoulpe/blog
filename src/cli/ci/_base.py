@@ -9,7 +9,7 @@ from typing import Any, ClassVar
 import termcolor
 import yaml
 
-from scripts import base
+from cli import base
 
 BASE_WORKFLOW_DIR = base.PROJECT_ROOT.parent.joinpath(".github", "workflows")
 BASE_ACTION_DIR = base.PROJECT_ROOT.parent.joinpath(".github", "actions")

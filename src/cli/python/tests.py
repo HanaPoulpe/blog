@@ -8,7 +8,7 @@ from typing import Any, ClassVar
 
 import termcolor
 
-from scripts import base
+from cli import base
 
 _TEST_REGISTRY: list["Pytest"] = []
 
@@ -83,7 +83,7 @@ class Pytest(base.CommandWithParser, base.Command):
     def _expand_files(
         self,
         files: list[str | pathlib.Path],
-    ) -> Generator[pathlib.Path, None, None]:
+    ) -> Generator[pathlib.Path]:
         for file in files:
             if isinstance(file, pathlib.Path):
                 file = str(file)

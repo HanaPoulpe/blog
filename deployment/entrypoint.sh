@@ -13,11 +13,11 @@ function debug() {
   fi
 }
 
-function poetry_run() {
+ function django_run() {
   if which "$1"; then
     exec "$@"
   else
-    exec poetry run "$@"
+    exec ./blog/manage.py "$@"
   fi
 }
 
@@ -29,7 +29,7 @@ fi
 case $1 in
   "shell")
     debug "Starting django shell."
-    poetry_run django-shell
+    django_run shell
     ;;
   "bash")
     debug "Starting bash."

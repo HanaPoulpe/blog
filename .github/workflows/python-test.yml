@@ -29,17 +29,17 @@ jobs:
     - id: run-ruff
       if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
       name: Run ruff
-      run: poetry run python-ruff ${{ steps.file-changed.outputs.all_changed_files
+      run: cd src && python -m cli --command=python_ruff ${{ steps.file-changed.outputs.all_changed_files
         }}
     - id: ruff-format
       if: ${{ steps.file-changed.outputs.any_changed == 'true' }}
       name: Ruff Format
-      run: poetry run python-format ${{ steps.file-changed.outputs.all_changed_files
+      run: cd src && python -m cli --command=python_format ${{ steps.file-changed.outputs.all_changed_files
         }}
   lock:
     container: python:3.13-slim-bookworm
     if: ${{ github.event_name == 'pull_request' }}
-    name: 'Python linter: poetry lock check'
+    name: 'Python linter: uv lock check'
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -47,8 +47,8 @@ jobs:
     - name: Build
       uses: ./.github/actions/build
     - id: run-lock
-      name: Run poetry lock check
-      run: poetry check --strict --lock
+      name: Run uv lock check
+      run: uv lock
   mypy:
     container: python:3.13-slim-bookworm
     env:
@@ -75,7 +75,7 @@ jobs:
             - '!**/migrations/*.py'
     - id: run-mypy
       name: Run mypy
-      run: poetry run python-type-check ${{ steps.file-changed.outputs.all_changed_files
+      run: cd src && python -m cli --command=mypy ${{ steps.file-changed.outputs.all_changed_files
         }}
   blog_site_tests:
     container: python:3.13-slim-bookworm
@@ -103,7 +103,7 @@ jobs:
       uses: ./.github/actions/build
     - id: run-blog-site-tests
       name: Run blog_site_tests
-      run: poetry run python-test-suite blog_site_tests
+      run: cd src && python -m cli --command=test_suite blog_site_tests
   all_apps_tests:
     container: python:3.13-slim-bookworm
     env:
@@ -130,7 +130,7 @@ jobs:
       uses: ./.github/actions/build
     - id: run-all-apps-tests
       name: Run all_apps_tests
-      run: poetry run python-test-suite all_apps_tests
+      run: cd src && python -m cli --command=test_suite all_apps_tests
   unit_tests:
     container: python:3.13-slim-bookworm
     env:
@@ -157,7 +157,7 @@ jobs:
       uses: ./.github/actions/build
     - id: run-unit-tests
       name: Run unit_tests
-      run: poetry run python-test-suite unit_tests
+      run: cd src && python -m cli --command=test_suite unit_tests
   shell_tests:
     container: python:3.13-slim-bookworm
     env:
@@ -184,7 +184,7 @@ jobs:
       uses: ./.github/actions/build
     - id: run-shell-tests
       name: Run shell_tests
-      run: poetry run python-test-suite shell_tests
+      run: cd src && python -m cli --command=test_suite shell_tests
   coverage:
     container: python:3.13-slim-bookworm
     env:
@@ -215,7 +215,7 @@ jobs:
       run: apt-get update && apt-get install -y gpg
     - id: run-coverage
       name: Run coverage
-      run: 'poetry run python-coverage '
+      run: 'cd src && python -m cli --command=python_coverage '
     - id: upload-coverage
       name: Upload coverage
       uses: codecov/codecov-action@v5
