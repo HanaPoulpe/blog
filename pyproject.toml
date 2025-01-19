@@ -28,7 +28,27 @@ dependencies = [
     "attrs~=24.3.0",
 ]
 
-[tool.poetry]
+[dependency-groups]
+dev = [
+    "pytest>=8.3.4,<9",
+    "ruff>=0.8.4,<0.9",
+    "mypy>=1.14.0,<2",
+    "SQLite3-0611>=0.0.1,<0.0.2",
+    "coverage>=7.6.10,<8",
+    "pytest-cov>=6.0.0,<7",
+    "import-linter~=2.1",
+    "types-pyyaml>=6.0.12.20241230,<7",
+    "commit-linter>=1.0.3,<2",
+    "factory-boy>=3.3.1,<4",
+    "wagtail-factories>=4.2.1,<5",
+    "pytest-env>=1.1.5,<2",
+    "pytest-django>=4.9.0,<5",
+    "django-types>=0.20.0,<0.21",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.mypy]
 python_version = "3.12"
@@ -145,52 +165,3 @@ forbidden_modules = [
     "tests",
     "scripts",
 ]
-
-[project.scripts]
-# Python tools
-python-ruff = "scripts:ruff"
-python-format = "scripts:ruff_format"
-python-tests = "scripts:pytest"
-python-all-tests = "scripts:all_tests"
-python-test-suite = "scripts:test_suite"
-python-coverage = "scripts:coverage"
-python-type-check = "scripts:mypy"
-python-check-imports = "scripts:import_linter"
-
-# CI tools
-ci-python-tests = "scripts:github_python_test"
-ci-approval-bot = "scripts:github_approval_bot"
-ci-frontend = "scripts:github_frontend_test"
-ci-docker = "scripts:github_docker_test"
-
-# Django
-django-start = "scripts:django_runserver"
-django-shell = "scripts:django_shell"
-django-manage = "scripts:django_manage"
-django-makemigrations = "scripts:django_makemigrations"
-django-migrate = "scripts:django_migrate"
-django-createsuperuser = "scripts:django_createsuperuser"
-collectstatic = "scripts:django_collectstatic"
-
-# Docker
-docker-entrypoint-test = "scripts:docker_entrypoint_tests"
-
-[tool.poetry.group.dev.dependencies]
-pytest = "^8.3.4"
-ruff = "^0.8.4"
-mypy = "^1.14.0"
-SQLite3-0611 = "^0.0.1"
-coverage = "^7.6.10"
-pytest-cov = "^6.0.0"
-import-linter = "^2.1"
-types-pyyaml = "^6.0.12.20241230"
-commit-linter = "^1.0.3"
-factory-boy = "^3.3.1"
-wagtail-factories = "^4.2.1"
-pytest-env = "^1.1.5"
-pytest-django = "^4.9.0"
-django-types = "^0.20.0"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
