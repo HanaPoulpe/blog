@@ -1,6 +1,7 @@
 from collections.abc import Callable
 
 import pytest
+
 from blog.application.queries import health
 
 

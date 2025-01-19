@@ -1,5 +1,6 @@
 import factory
 import wagtail_factories
+
 from blog.content import models
 
 

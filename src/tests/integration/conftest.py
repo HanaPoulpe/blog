@@ -1,9 +1,9 @@
 from collections.abc import Iterable
 
 import pytest
-from blog.home import models as home_models
 
 import tests.fixtures  # noqa: F401
+from blog.home import models as home_models
 
 
 @pytest.fixture(autouse=True)

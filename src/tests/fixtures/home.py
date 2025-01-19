@@ -1,7 +1,7 @@
 import pytest
-from blog.home import models
 from wagtail import models as wagtail_models
 
+from blog.home import models
 from tests.factories import home
 
 

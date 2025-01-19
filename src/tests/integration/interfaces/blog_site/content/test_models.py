@@ -2,11 +2,11 @@ import random
 
 import attrs
 import pytest
-from blog.content import models as content_models
 from django import http
 from django import test as django_test
 from django.contrib.auth import models as auth_models
 
+from blog.content import models as content_models
 from tests import utils as test_utils
 from tests.factories import content as content_factory
 
