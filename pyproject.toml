@@ -26,6 +26,7 @@ dependencies = [
     "psycopg2-binary~=2.9.10",
     "django-linear-migrations~=2.16.0",
     "attrs~=24.3.0",
+    "click>=8.1.8",
 ]
 
 [project.optional-dependencies]

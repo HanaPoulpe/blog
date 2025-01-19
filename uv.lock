@@ -46,6 +46,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "attrs" },
+    { name = "click" },
     { name = "django" },
     { name = "django-configurations" },
     { name = "django-health-check" },
@@ -82,6 +83,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "attrs", specifier = "~=24.3.0" },
+    { name = "click", specifier = ">=8.1.8" },
     { name = "commit-linter", marker = "extra == 'dev'", specifier = ">=1.0.3,<2" },
     { name = "coverage", marker = "extra == 'dev'", specifier = ">=7.6.10,<8" },
     { name = "django", specifier = "~=5.1.4" },
