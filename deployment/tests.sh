@@ -35,8 +35,10 @@ function test_usage() {
   fi
 }
 
+
 # Shell test
 function test_shell() {
+  export DJANGO_CONFIGURATION=BlogSite
   if ! result=$(echo "print(\"SUCCESS\");exit()" | $ENTRYPOINT shell); then
     failed "shell: Errored with non 0 exit code"
   elif [[ $result != *SUCCESS ]]; then

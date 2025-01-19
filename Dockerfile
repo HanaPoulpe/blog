@@ -1,13 +1,12 @@
 FROM python:3.13-bookworm AS base
 
 # Install system deps
-ARG debug
+ARG debug=0
 ENV DEBUG=${debug}
 RUN echo "Debug mode: $DEBUG"
 RUN apt update && apt upgrade -y --no-install-recommends
 RUN test "$DEBUG" -eq 1 && \
-    apt install -y shellcheck --no-install-recommends || \
-    true;
+    apt install -y shellcheck --no-install-recommends;
 # Cleanup apt cache
 RUN rm -rf /var/lib/apt/lists/*
 # Install uv

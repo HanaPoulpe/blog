@@ -8,7 +8,7 @@ authors = [
 readme = "README.md"
 packages = [
     {include="blog", from="src"},
-    {include="scripts", from="src"}
+    {include="cli", from="src"},
 ]
 requires-python = "~=3.12"
 dependencies = [
