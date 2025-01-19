@@ -4,8 +4,7 @@ import pathlib
 from typing import Any, ClassVar, TypeGuard
 
 import manage
-
-from scripts import base
+from cli import base
 
 
 def is_str_iterable(value: Any) -> TypeGuard[list[str]]:

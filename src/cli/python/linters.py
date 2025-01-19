@@ -13,7 +13,7 @@ except ImportError:
 
     ruff = _Ruff()
 
-from scripts import base
+from cli import base
 
 
 class Ruff(base.ExecCommand):

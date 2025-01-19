@@ -1,7 +1,7 @@
 import pathlib
 from typing import Any, ClassVar
 
-from scripts.django import management
+from cli.django import management
 
 from . import tests
 

@@ -2,7 +2,7 @@ import argparse
 import collections
 from typing import Any, ClassVar
 
-from scripts.python import tests as python_tests
+from cli.python import tests as python_tests
 
 from . import _base as base
 

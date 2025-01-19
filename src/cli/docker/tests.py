@@ -1,6 +1,6 @@
 from typing import Any
 
-from scripts import base
+from cli import base
 
 
 class DockerEntrypointTests(base.ExecCommand):

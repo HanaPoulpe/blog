@@ -8,7 +8,7 @@ from . import base
 def _walk_files(
     path: pathlib.Path,
     exclude_current: bool,
-) -> Generator[pathlib.Path, None, None]:
+) -> Generator[pathlib.Path]:
     for entry in path.iterdir():
         if entry.is_dir():
             yield from _walk_files(entry, False)

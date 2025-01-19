@@ -5,7 +5,7 @@ import os
 import pathlib
 import subprocess
 import sys
-from collections.abc import Callable, Generator
+from collections.abc import Generator
 from typing import Any, ClassVar, Self, TextIO
 
 PROJECT_ROOT: pathlib.Path = pathlib.Path(__file__).parent.parent
@@ -15,17 +15,17 @@ class CommandError(Exception):
     pass
 
 
-_COMMAND_REGISTER: dict[str, Callable[[], None]] = {}
+_COMMAND_REGISTER: dict[str, "BaseCommand"] = {}
 
 
-class _BaseCommand(abc.ABC):
+class BaseCommand(abc.ABC):
     name: ClassVar[str] = ""
     description: ClassVar[str] = ""
 
     cwd: ClassVar[str | pathlib.Path | None] = None
 
     @contextlib.contextmanager
-    def set_cwd(self) -> Generator[None, None, None]:
+    def set_cwd(self) -> Generator[None]:
         _cwd = pathlib.Path.cwd()
         if self.cwd is not None:
             os.chdir(self.cwd)
@@ -53,7 +53,7 @@ class _BaseCommand(abc.ABC):
         _COMMAND_REGISTER[name] = cls.as_command()
 
 
-class Command(_BaseCommand, abc.ABC):
+class Command(BaseCommand, abc.ABC):
     """
     Base class for commands with specific parser (mostly likely any new commands)
     """
@@ -66,7 +66,7 @@ class Command(_BaseCommand, abc.ABC):
 
     def __call__(self, args: list[str] | None = None) -> None:
         # Manage arguments
-        args = args or sys.argv[1:]
+        args = args or sys.argv[2:]
         parser = self.get_parser()
         self.add_arguments(parser)
         arguments = parser.parse_args(args)
@@ -80,13 +80,13 @@ class Command(_BaseCommand, abc.ABC):
             exit(1)
 
 
-class CommandWithParser(_BaseCommand, abc.ABC):
+class CommandWithParser(BaseCommand, abc.ABC):
     """
     Base class for commands with existing commandline parser (like isort, etc...)
     """
 
     def __call__(self, args: list[str] | None = None) -> None:
-        args = args or sys.argv[1:]
+        args = args or sys.argv[2:]
 
         try:
             with self.set_cwd():
